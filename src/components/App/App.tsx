@@ -1,5 +1,9 @@
-import "./App.css";
+import Header from "../Header/Header";
 
-const App = () => <div></div>;
+const App = () => (
+  <div>
+    <Header />
+  </div>
+);
 
 export default App;
