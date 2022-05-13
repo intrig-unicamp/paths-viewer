@@ -1,7 +1,6 @@
 import { InsertDriveFile } from "@mui/icons-material";
-import { Container } from "@mui/material";
 import Button from "@mui/material/Button";
-import { ChangeEvent, FunctionComponent } from "react";
+import { ChangeEvent, Fragment, FunctionComponent } from "react";
 import "./FileUploadButton.css";
 
 interface IFileUploadButtonProps {
@@ -13,7 +12,7 @@ const FileUploadButton: FunctionComponent<IFileUploadButtonProps> = ({
   onSelectFile,
   variant,
 }) => (
-  <Container className="button-container">
+  <Fragment>
     <label htmlFor="upload-button">
       <input
         accept=".csv"
@@ -30,7 +29,7 @@ const FileUploadButton: FunctionComponent<IFileUploadButtonProps> = ({
         Add file
       </Button>
     </label>
-  </Container>
+  </Fragment>
 );
 
 export default FileUploadButton;
