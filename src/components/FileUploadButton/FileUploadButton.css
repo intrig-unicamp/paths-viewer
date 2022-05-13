@@ -1,0 +1,9 @@
+input {
+    display: none;
+}
+
+.button-container {
+    display: flex !important;
+    justify-content: center;
+    margin: 8px 0;
+}

@@ -1,0 +1,11 @@
+footer {
+  display: flex;
+  justify-content: center;
+
+  margin-top: auto;
+  padding: 8px;
+}
+
+a {
+  padding-left: 4px;
+}
