@@ -11,6 +11,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import Papa from "papaparse";
 import { ChangeEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import ColorPicker, { Colors } from "../ColorPicker/ColorPicker";
@@ -20,6 +21,15 @@ import "./FilesSelectionContainer.css";
 interface IFile {
   filename: string;
   color: string;
+  data?: {
+    date?: string;
+    time?: string;
+    id?: string;
+    line?: string;
+    latitude?: string;
+    longitude?: string;
+    speed?: string;
+  };
 }
 
 const FilesSelectionContainer = () => {
@@ -33,20 +43,35 @@ const FilesSelectionContainer = () => {
     return Colors[key];
   };
 
+  const parseFileData = (file: File) => {
+    Papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: ({ data }) => {
+        const filesList = [...files];
+        filesList.push({
+          filename: file.name,
+          color: getRandomColor(),
+          data,
+        });
+        setFiles(filesList);
+      },
+      error: (error) => console.error(error),
+    });
+  };
+
   const onSelectFile = (evt: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = evt?.target?.files;
 
     if (!selectedFiles || selectedFiles.length === 0) {
       return;
-    } else if (selectedFiles[0].type !== "text/csv") {
+    }
+
+    const file = selectedFiles[0];
+    if (file.type !== "text/csv") {
       throw new Error("Only CSV files are allowed");
     } else {
-      const filesList = [...files];
-      filesList.push({
-        filename: selectedFiles[0].name,
-        color: getRandomColor(),
-      });
-      setFiles(filesList);
+      parseFileData(file);
     }
   };
 
