@@ -2,9 +2,11 @@ import { ArrowBack } from "@mui/icons-material";
 import { Container, IconButton, Paper, Stack, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
+import Map from "../../components/Map/Map";
 
 const MapViewerPage: FunctionComponent = () => {
   const navigate = useNavigate();
+
   return (
     <Container component="main" maxWidth="lg">
       <Paper sx={{ my: 2, p: 1 }}>
@@ -16,6 +18,7 @@ const MapViewerPage: FunctionComponent = () => {
             Map
           </Typography>
         </Stack>
+        <Map />
       </Paper>
     </Container>
   );
