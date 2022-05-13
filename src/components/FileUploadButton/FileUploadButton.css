@@ -1,9 +1,9 @@
 input {
-    display: none;
+  display: none;
 }
 
 .button-container {
-    display: flex !important;
-    justify-content: center;
-    margin: 8px 0;
+  display: flex !important;
+  justify-content: center;
+  margin: 8px 0;
 }
