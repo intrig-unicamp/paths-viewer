@@ -1,10 +1,24 @@
 import { ArrowBack } from "@mui/icons-material";
-import { Container, IconButton, Paper, Stack, Typography } from "@mui/material";
+import {
+  Container,
+  Grid,
+  IconButton,
+  List,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { FunctionComponent } from "react";
 import { useNavigate } from "react-router-dom";
+import { IFile } from "../../components/App/App";
+import CoordinatesList from "../../components/CoordinatesList/CoordinatesList";
 import Map from "../../components/Map/Map";
 
-const MapViewerPage: FunctionComponent = () => {
+interface MapViewerPageProps {
+  files: IFile[];
+}
+
+const MapViewerPage: FunctionComponent<MapViewerPageProps> = ({ files }) => {
   const navigate = useNavigate();
 
   return (
@@ -18,7 +32,22 @@ const MapViewerPage: FunctionComponent = () => {
             Map
           </Typography>
         </Stack>
-        <Map />
+        <Grid container spacing={1}>
+          <Grid item xs={8}>
+            <Paper>
+              <Map />
+            </Paper>
+          </Grid>
+          <Grid item xs={4}>
+            <Paper>
+              <List>
+                {files.map((file, fileIndex) => (
+                  <CoordinatesList file={file} key={`file-${fileIndex}`} />
+                ))}
+              </List>
+            </Paper>
+          </Grid>
+        </Grid>
       </Paper>
     </Container>
   );

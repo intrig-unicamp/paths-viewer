@@ -12,29 +12,21 @@ import {
   Typography,
 } from "@mui/material";
 import Papa from "papaparse";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FunctionComponent } from "react";
 import { Link } from "react-router-dom";
+import { IFile } from "../App/App";
 import ColorPicker, { Colors } from "../ColorPicker/ColorPicker";
 import FileUploadButton from "../FileUploadButton/FileUploadButton";
 import "./FilesSelectionContainer.css";
 
-interface IFile {
-  filename: string;
-  color: string;
-  data?: {
-    date?: string;
-    time?: string;
-    id?: string;
-    line?: string;
-    latitude?: string;
-    longitude?: string;
-    speed?: string;
-  };
+interface FilesSelectionContainerProps {
+  files: IFile[];
+  setFiles: (files: IFile[]) => void;
 }
 
-const FilesSelectionContainer = () => {
-  const [files, setFiles] = useState<IFile[]>([]);
-
+const FilesSelectionContainer: FunctionComponent<
+  FilesSelectionContainerProps
+> = ({ files, setFiles }) => {
   const getRandomColor = (): string => {
     const colors = Object.keys(Colors);
     const index = Math.floor(Math.random() * colors.length) + 1;
