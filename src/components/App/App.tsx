@@ -6,18 +6,19 @@ import MapViewerPage from "../../pages/MapViewer/MapViewer";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 
+export interface ICoordinatesData {
+  date?: string;
+  time?: string;
+  id?: string;
+  line?: string;
+  latitude?: string;
+  longitude?: string;
+  speed?: string;
+}
 export interface IFile {
   filename: string;
   color: string;
-  data?: {
-    date?: string;
-    time?: string;
-    id?: string;
-    line?: string;
-    latitude?: string;
-    longitude?: string;
-    speed?: string;
-  }[];
+  data?: ICoordinatesData[];
 }
 
 const App: FunctionComponent = () => {

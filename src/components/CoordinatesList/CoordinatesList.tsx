@@ -9,8 +9,6 @@ import {
 } from "@mui/material";
 import { Fragment, FunctionComponent, useState } from "react";
 import { IFile } from "../App/App";
-import { Colors } from "../ColorPicker/ColorPicker";
-import "./CoordinatesList.css";
 
 interface CoordinatesListProps {
   file: IFile;
@@ -27,8 +25,8 @@ const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({ file }) => {
         }}
         sx={{ backgroundColor: "#f1f3f5" }}
       >
-        <ListItemIcon sx={{ minWidth: 0, mr: 2 }}>
-          <Circle sx={{ backgroundColor: Colors[color] }} fontSize="small" />
+        <ListItemIcon sx={{ minWidth: 0, mr: 2, color }}>
+          <Circle fontSize="small" />
         </ListItemIcon>
         <ListItemText primary={filename} />
         {open ? <ExpandLess /> : <ExpandMore />}

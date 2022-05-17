@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IFile } from "../../components/App/App";
 import CoordinatesList from "../../components/CoordinatesList/CoordinatesList";
@@ -20,6 +20,12 @@ interface MapViewerPageProps {
 
 const MapViewerPage: FunctionComponent<MapViewerPageProps> = ({ files }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!files || files.length === 0) {
+      navigate("/");
+    }
+  }, [files]);
 
   return (
     <Container component="main" maxWidth="lg">
@@ -35,7 +41,7 @@ const MapViewerPage: FunctionComponent<MapViewerPageProps> = ({ files }) => {
         <Grid container spacing={1}>
           <Grid item xs={8}>
             <Paper>
-              <Map />
+              <Map files={files} />
             </Paper>
           </Grid>
           <Grid item xs={4}>
