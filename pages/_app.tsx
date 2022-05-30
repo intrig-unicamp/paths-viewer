@@ -4,16 +4,16 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { useState } from "react";
 import { Provider } from "react-redux";
+import "../components/ColorPicker/ColorPicker.css";
+import "../components/FilesSelectionContainer/FilesSelectionContainer.css";
+import "../components/FileUploadButton/FileUploadButton.css";
 import Footer from "../components/Footer/Footer";
+import "../components/Footer/Footer.css";
 import Header from "../components/Header/Header";
+import "../components/Header/Header.css";
+import "../components/Map/Map.css";
 import store from "../config/store";
 import theme from "../config/theme";
-import "../css/ColorPicker.css";
-import "../css/FilesSelectionContainer.css";
-import "../css/FileUploadButton.css";
-import "../css/Footer.css";
-import "../css/Header.css";
-import "../css/Map.css";
 import { createEmotionCache } from "./_document";
 
 export interface ICoordinatesData {
