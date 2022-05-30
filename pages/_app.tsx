@@ -11,6 +11,7 @@ import "../css/FilesSelectionContainer.css";
 import "../css/FileUploadButton.css";
 import "../css/Footer.css";
 import "../css/Header.css";
+import "../css/Map.css";
 import { createEmotionCache } from "./_document";
 
 export interface ICoordinatesData {
@@ -45,6 +46,7 @@ export default function App({
   return (
     <CacheProvider value={emotionCache}>
       <Head>
+        <title>Paths Viewer</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>

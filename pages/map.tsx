@@ -8,8 +8,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import { FunctionComponent, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import CoordinatesList from "../components/CoordinatesList/CoordinatesList";
 import Map from "../components/Map/Map";
 import { IFile } from "./_app";
@@ -19,11 +19,11 @@ interface MapViewerPageProps {
 }
 
 const MapViewerPage: FunctionComponent<MapViewerPageProps> = ({ files }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     if (!files || files.length === 0) {
-      navigate("/");
+      router.back();
     }
   }, [files]);
 
@@ -31,7 +31,7 @@ const MapViewerPage: FunctionComponent<MapViewerPageProps> = ({ files }) => {
     <Container component="main" maxWidth="lg">
       <Paper sx={{ my: 2, p: 1 }}>
         <Stack direction="row" spacing={1} alignItems="center">
-          <IconButton aria-label="go-back" onClick={() => navigate(-1)}>
+          <IconButton aria-label="go-back" onClick={() => router.back()}>
             <ArrowBack />
           </IconButton>
           <Typography component="h1" variant="h1" align="center">
