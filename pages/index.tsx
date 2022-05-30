@@ -1,10 +1,8 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 import FilesSelectionContainer from "../components/FilesSelectionContainer/FilesSelectionContainer";
-import { IFile } from "./_app";
 
 const FilesSelectionPage: FunctionComponent = () => {
-  const [files, setFiles] = useState<IFile[]>([]);
-  return <FilesSelectionContainer files={files} setFiles={setFiles} />;
+  return <FilesSelectionContainer />;
 };
 
 export default FilesSelectionPage;

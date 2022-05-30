@@ -60,18 +60,18 @@ interface MapProps {
 }
 
 const Map: FunctionComponent<MapProps> = ({ files }) => {
-  const { REACT_APP_GOOGLE_API_KEY } = process.env;
+  const NEXT_PUBLIC_GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
   const center = {
     lat: Number(files[0]?.data?.[0].latitude),
     lng: Number(files[0]?.data?.[0].longitude),
   };
 
-  if (!REACT_APP_GOOGLE_API_KEY) {
+  if (!NEXT_PUBLIC_GOOGLE_API_KEY) {
     throw new Error("No Google Maps API Key specified.");
   }
 
   return (
-    <Wrapper apiKey={REACT_APP_GOOGLE_API_KEY}>
+    <Wrapper apiKey={NEXT_PUBLIC_GOOGLE_API_KEY}>
       <MapContainer center={center} zoom={14} files={files} />
     </Wrapper>
   );

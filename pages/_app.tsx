@@ -3,8 +3,10 @@ import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { useState } from "react";
+import { Provider } from "react-redux";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
+import store from "../config/store";
 import theme from "../config/theme";
 import "../css/ColorPicker.css";
 import "../css/FilesSelectionContainer.css";
@@ -59,7 +61,9 @@ export default function App({
           }}
         >
           <Header />
-          <Component {...pageProps} />
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
           <Footer />
         </Box>
       </ThemeProvider>

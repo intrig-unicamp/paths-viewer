@@ -12,14 +12,12 @@ import { useRouter } from "next/router";
 import { FunctionComponent, useEffect } from "react";
 import CoordinatesList from "../components/CoordinatesList/CoordinatesList";
 import Map from "../components/Map/Map";
-import { IFile } from "./_app";
+import { useAppSelector } from "../config/hooks";
+import { selectFiles } from "../features/files/slice";
 
-interface MapViewerPageProps {
-  files: IFile[];
-}
-
-const MapViewerPage: FunctionComponent<MapViewerPageProps> = ({ files }) => {
+const MapViewerPage: FunctionComponent = () => {
   const router = useRouter();
+  const files = useAppSelector(selectFiles);
 
   useEffect(() => {
     if (!files || files.length === 0) {
