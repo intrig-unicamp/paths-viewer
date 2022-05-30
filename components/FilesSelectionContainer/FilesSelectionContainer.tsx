@@ -13,10 +13,10 @@ import {
 } from "@mui/material";
 import Papa from "papaparse";
 import { ChangeEvent, FunctionComponent } from "react";
-import { Link } from "react-router-dom";
 import { IFile } from "../../pages/_app";
 import ColorPicker, { Colors } from "../ColorPicker/ColorPicker";
 import FileUploadButton from "../FileUploadButton/FileUploadButton";
+import Link from "../Link/Link";
 
 interface FilesSelectionContainerProps {
   files: IFile[];
@@ -99,7 +99,7 @@ const FilesSelectionContainer: FunctionComponent<
             />
           )}
           {files.length > 0 && (
-            <Link to="/map">
+            <Link href="/map">
               <Button variant="contained" size="small" endIcon={<Send />}>
                 {" "}
                 View paths on map{" "}
