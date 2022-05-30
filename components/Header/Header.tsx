@@ -1,7 +1,6 @@
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 import LogoIcon from "../Logo/Logo";
-import "./Header.css";
 
 const Header: FunctionComponent = () => (
   <div>

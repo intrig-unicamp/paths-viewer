@@ -14,10 +14,9 @@ import {
 import Papa from "papaparse";
 import { ChangeEvent, FunctionComponent } from "react";
 import { Link } from "react-router-dom";
-import { IFile } from "../App/App";
+import { IFile } from "../../pages/_app";
 import ColorPicker, { Colors } from "../ColorPicker/ColorPicker";
 import FileUploadButton from "../FileUploadButton/FileUploadButton";
-import "./FilesSelectionContainer.css";
 
 interface FilesSelectionContainerProps {
   files: IFile[];

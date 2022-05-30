@@ -1,7 +1,6 @@
 import { InsertDriveFile } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import { ChangeEvent, Fragment, FunctionComponent } from "react";
-import "./FileUploadButton.css";
 
 interface IFileUploadButtonProps {
   onSelectFile: (evt: ChangeEvent<HTMLInputElement>) => void;

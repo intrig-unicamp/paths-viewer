@@ -6,7 +6,6 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { FunctionComponent } from "react";
-import "./ColorPicker.css";
 
 export const Colors = {
   Gray: "#212529",

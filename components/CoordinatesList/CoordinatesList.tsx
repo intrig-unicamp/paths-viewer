@@ -8,7 +8,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Fragment, FunctionComponent, useState } from "react";
-import { IFile } from "../App/App";
+import { IFile } from "../../pages/_app";
 
 interface CoordinatesListProps {
   file: IFile;

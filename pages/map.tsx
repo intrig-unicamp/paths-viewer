@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import { FunctionComponent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { IFile } from "../../components/App/App";
-import CoordinatesList from "../../components/CoordinatesList/CoordinatesList";
-import Map from "../../components/Map/Map";
+import CoordinatesList from "../components/CoordinatesList/CoordinatesList";
+import Map from "../components/Map/Map";
+import { IFile } from "./_app";
 
 interface MapViewerPageProps {
   files: IFile[];

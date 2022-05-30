@@ -1,6 +1,6 @@
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { IFile } from "../App/App";
+import { IFile } from "../../pages/_app";
 import "./Map.css";
 
 interface MapContainerProps {

@@ -1,6 +1,5 @@
 import { Box, Link } from "@mui/material";
 import { FunctionComponent } from "react";
-import "./Footer.css";
 
 const Footer: FunctionComponent = () => (
   <Box component="footer">
