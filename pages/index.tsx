@@ -1,8 +1,11 @@
+import { useRouter } from "next/router";
 import { FunctionComponent } from "react";
-import FilesSelectionContainer from "../components/FilesSelectionContainer/FilesSelectionContainer";
+import ModeSelector from "../components/ModeSelector/ModeSelector";
 
-const FilesSelectionPage: FunctionComponent = () => {
-  return <FilesSelectionContainer />;
+const IndexPage: FunctionComponent = () => {
+  const router = useRouter();
+
+  return <ModeSelector />;
 };
 
-export default FilesSelectionPage;
+export default IndexPage;

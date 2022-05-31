@@ -7,7 +7,7 @@ if (!admin.apps.length) {
       credential: admin.credential.cert(firebaseConfig as admin.ServiceAccount),
       databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.log("Firebase admin initialization error", error?.stack);
   }
 }

@@ -6,7 +6,6 @@
 .buttons-stack {
   display: flex !important;
   justify-content: center;
-  margin: 8px 0;
 }
 
 a {

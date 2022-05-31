@@ -85,11 +85,24 @@ const FilesSelectionContainer: FunctionComponent = () => {
   return (
     <Container component="main" maxWidth="sm">
       <Paper sx={{ my: 2, p: 1 }}>
-        <Typography component="h1" variant="h4" align="center">
+        <Typography
+          component="h1"
+          variant="h1"
+          align="center"
+          sx={{ pb: 1, fontWeight: "bold" }}
+        >
+          Static Mode
+        </Typography>
+        <Typography component="span" variant="body2" sx={{ px: 1 }}>
           To start, select up to 5 CSV files with paths to render.
         </Typography>
 
-        <Stack direction="row" spacing={1} className="buttons-stack">
+        <Stack
+          direction="row"
+          spacing={1}
+          className="buttons-stack"
+          sx={{ my: 2 }}
+        >
           {files.length < 5 && (
             <FileUploadButton
               variant={files.length === 0 ? "contained" : "outlined"}
@@ -97,7 +110,7 @@ const FilesSelectionContainer: FunctionComponent = () => {
             />
           )}
           {files.length > 0 && (
-            <Link href="/map">
+            <Link href="/static/map">
               <Button variant="contained" size="small" endIcon={<Send />}>
                 {" "}
                 View paths on map{" "}
