@@ -18,3 +18,11 @@ const Custom404Page: FunctionComponent = () => {
   );
 };
 export default Custom404Page;
+
+export async function getStaticProps() {
+  return {
+    props: {
+      title: "404",
+    },
+  };
+}

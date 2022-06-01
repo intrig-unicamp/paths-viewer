@@ -6,3 +6,11 @@ const FilesSelectionPage: FunctionComponent = () => {
 };
 
 export default FilesSelectionPage;
+
+export async function getStaticProps() {
+  return {
+    props: {
+      title: "Static Mode",
+    },
+  };
+}

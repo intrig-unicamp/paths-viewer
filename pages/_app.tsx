@@ -2,7 +2,6 @@ import { CacheProvider, EmotionCache } from "@emotion/react";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import { useState } from "react";
 import { Provider } from "react-redux";
 import "../components/ColorPicker/ColorPicker.css";
 import "../components/FilesSelectionContainer/FilesSelectionContainer.css";
@@ -43,12 +42,17 @@ export default function App({
   emotionCache = clientSideEmotionCache,
   pageProps,
 }: AppWithCacheProps) {
-  const [files, setFiles] = useState<IFile[]>([]);
+  const { title: customTitle } = pageProps;
+
+  let title = "Paths Viewer";
+  if (customTitle) {
+    title = `${customTitle} | ${title}`;
+  }
 
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>Paths Viewer</title>
+        <title>{title}</title>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <ThemeProvider theme={theme}>

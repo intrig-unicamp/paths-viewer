@@ -68,3 +68,11 @@ const MapViewerPage: FunctionComponent = () => {
 };
 
 export default MapViewerPage;
+
+export async function getStaticProps() {
+  return {
+    props: {
+      title: "Map on Static Mode",
+    },
+  };
+}
