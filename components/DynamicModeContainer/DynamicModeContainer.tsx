@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { Fragment, FunctionComponent, useState } from "react";
+import MapContainer from "../MapContainer/MapContainer";
 
 interface DynamicModeContainerProps {
   sessionId: string;
@@ -29,6 +30,7 @@ const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
           Dynamic Mode
         </Typography>
         <HelpCard sessionId={sessionId} />
+        <MapContainer />
       </Paper>
     </Container>
   );
@@ -67,8 +69,8 @@ const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
       "id": "SOME_ID",
       "date": "2022-01-02",
       "time": "23:59:59",
-      "longitude": -22.6934614,
-      "latitude": -47.5207821,
+      "latitude": -22.8225099,
+      "longitude": -47.075616,
       "speed": 42.1
     }'`,
     },
@@ -97,8 +99,8 @@ const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
       </div>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
-        {sections.map(({ title, content }) => (
-          <Fragment>
+        {sections.map(({ title, content }, index) => (
+          <Fragment key={`card-${index}`}>
             <Typography component="h2" variant="h2" sx={{ mt: 1 }}>
               {title}
             </Typography>

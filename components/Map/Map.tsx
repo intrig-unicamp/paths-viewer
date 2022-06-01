@@ -62,8 +62,8 @@ interface MapProps {
 const Map: FunctionComponent<MapProps> = ({ entities }) => {
   const NEXT_PUBLIC_GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
   const center = {
-    lat: Number(entities[0]?.coordinates?.[0].latitude),
-    lng: Number(entities[0]?.coordinates?.[0].longitude),
+    lng: Number(entities[0]?.coordinates?.[0].latitude ?? -47.075616),
+    lat: Number(entities[0]?.coordinates?.[0].longitude ?? -22.8225099),
   };
 
   if (!NEXT_PUBLIC_GOOGLE_API_KEY) {

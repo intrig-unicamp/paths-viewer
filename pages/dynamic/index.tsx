@@ -33,7 +33,7 @@ export default DynamicModePage;
 export async function getStaticProps() {
   return {
     props: {
-      title: `Session on Dynamic Mode`,
+      title: "Session on Dynamic Mode",
     },
   };
 }
