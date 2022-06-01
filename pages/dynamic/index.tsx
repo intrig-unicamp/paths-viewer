@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
 import DynamicModeContainer from "../../components/DynamicModeContainer/DynamicModeContainer";
 import { useAppDispatch, useAppSelector } from "../../config/hooks";
-import { create, selectSession } from "../../features/sessions/slice";
+import { createSession, selectSession } from "../../features/sessions/slice";
 
 const DynamicModePage: FunctionComponent = () => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const DynamicModePage: FunctionComponent = () => {
   useEffect(() => {
     const { query } = router;
     if (query.sessionId) {
-      dispatch(create(String(query.sessionId)));
+      dispatch(createSession(String(query.sessionId)));
       setSessionId(String(query.sessionId));
     } else if (!!session.id) {
       setSessionId(session.id);

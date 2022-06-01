@@ -15,22 +15,6 @@ import store from "../config/store";
 import theme from "../config/theme";
 import { createEmotionCache } from "./_document";
 
-export interface ICoordinatesData {
-  date?: string;
-  time?: string;
-  id?: string;
-  line?: string;
-  latitude?: string;
-  longitude?: string;
-  speed?: string;
-}
-
-export interface IFile {
-  filename: string;
-  color: string;
-  data?: ICoordinatesData[];
-}
-
 interface AppWithCacheProps extends AppProps {
   emotionCache?: EmotionCache;
 }

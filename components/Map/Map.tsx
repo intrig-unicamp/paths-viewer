@@ -1,17 +1,17 @@
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { FunctionComponent, useEffect, useRef, useState } from "react";
-import { IFile } from "../../pages/_app";
+import { IEntity } from "../../models/IEntity";
 
-interface MapContainerProps {
+interface MapWrapperProps {
   center: google.maps.LatLngLiteral;
   zoom: number;
-  files: IFile[];
+  entities: IEntity[];
 }
 
-const MapContainer: FunctionComponent<MapContainerProps> = ({
+const MapWrapper: FunctionComponent<MapWrapperProps> = ({
   center,
   zoom,
-  files,
+  entities,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map>();
@@ -37,11 +37,11 @@ const MapContainer: FunctionComponent<MapContainerProps> = ({
   }, [center, ref, zoom, map]);
 
   useEffect(() => {
-    files.forEach(({ data, color }) => {
+    entities?.forEach(({ coordinates, color }) => {
       new google.maps.Polyline({
         geodesic: true,
         map,
-        path: data?.map((row) => ({
+        path: coordinates?.map((row) => ({
           lat: Number(row.latitude),
           lng: Number(row.longitude),
         })),
@@ -50,20 +50,20 @@ const MapContainer: FunctionComponent<MapContainerProps> = ({
         strokeWeight: 2,
       });
     });
-  }, [files, map]);
+  }, [entities, map]);
 
   return <div ref={ref} id="map" />;
 };
 
 interface MapProps {
-  files: IFile[];
+  entities: IEntity[];
 }
 
-const Map: FunctionComponent<MapProps> = ({ files }) => {
+const Map: FunctionComponent<MapProps> = ({ entities }) => {
   const NEXT_PUBLIC_GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
   const center = {
-    lat: Number(files[0]?.data?.[0].latitude),
-    lng: Number(files[0]?.data?.[0].longitude),
+    lat: Number(entities[0]?.coordinates?.[0].latitude),
+    lng: Number(entities[0]?.coordinates?.[0].longitude),
   };
 
   if (!NEXT_PUBLIC_GOOGLE_API_KEY) {
@@ -72,7 +72,7 @@ const Map: FunctionComponent<MapProps> = ({ files }) => {
 
   return (
     <Wrapper apiKey={NEXT_PUBLIC_GOOGLE_API_KEY}>
-      <MapContainer center={center} zoom={14} files={files} />
+      <MapWrapper center={center} zoom={14} entities={entities} />
     </Wrapper>
   );
 };

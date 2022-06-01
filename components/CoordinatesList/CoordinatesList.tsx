@@ -8,14 +8,16 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Fragment, FunctionComponent, useState } from "react";
-import { IFile } from "../../pages/_app";
+import { IEntity } from "../../models/IEntity";
 
 interface CoordinatesListProps {
-  file: IFile;
+  entity: IEntity;
 }
-const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({ file }) => {
+const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({
+  entity,
+}) => {
   const [open, setOpen] = useState<boolean>(false);
-  const { filename, data, color } = file;
+  const { id, color, coordinates } = entity;
 
   return (
     <Fragment>
@@ -28,13 +30,13 @@ const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({ file }) => {
         <ListItemIcon sx={{ minWidth: 0, mr: 2, color }}>
           <Circle fontSize="small" />
         </ListItemIcon>
-        <ListItemText primary={filename} />
+        <ListItemText primary={id} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Container sx={{ maxHeight: 200, overflow: "auto" }}>
           <List component="div" disablePadding>
-            {data?.map((row, index) => (
+            {coordinates?.map((row, index) => (
               <ListItemText
                 key={`coordinate-${index}`}
                 primary={`${row.latitude}, ${row.longitude}`}

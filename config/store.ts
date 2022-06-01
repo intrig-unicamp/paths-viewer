@@ -1,10 +1,9 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import filesReducer from "../features/files/slice";
 import sessionReducer from "../features/sessions/slice";
 
 export function makeStore() {
   return configureStore({
-    reducer: { files: filesReducer, session: sessionReducer },
+    reducer: { session: sessionReducer },
   });
 }
 

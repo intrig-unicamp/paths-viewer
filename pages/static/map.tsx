@@ -1,29 +1,20 @@
 import { ArrowBack } from "@mui/icons-material";
-import {
-  Container,
-  Grid,
-  IconButton,
-  List,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Container, IconButton, Paper, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect } from "react";
-import CoordinatesList from "../../components/CoordinatesList/CoordinatesList";
-import Map from "../../components/Map/Map";
+import MapContainer from "../../components/MapContainer/MapContainer";
 import { useAppSelector } from "../../config/hooks";
-import { selectFiles } from "../../features/files/slice";
+import { selectEntities } from "../../features/sessions/slice";
 
 const MapViewerPage: FunctionComponent = () => {
   const router = useRouter();
-  const files = useAppSelector(selectFiles);
+  const entities = useAppSelector(selectEntities);
 
   useEffect(() => {
-    if (!files || files.length === 0) {
+    if (!entities || entities.length === 0) {
       router.push("/static");
     }
-  }, [files]);
+  }, [entities]);
 
   return (
     <Container component="main" maxWidth="lg">
@@ -39,29 +30,7 @@ const MapViewerPage: FunctionComponent = () => {
         <Typography component="span" variant="body2" sx={{ mx: 1 }}>
           Click on any file on the list to see its coordinates list.
         </Typography>
-        <Grid container spacing={1} sx={{ my: 2 }}>
-          <Grid item xs={8}>
-            <Paper>
-              <Map files={files} />
-            </Paper>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography
-              component="h2"
-              variant="h2"
-              sx={{ m: 1, fontWeight: "bold" }}
-            >
-              Files list
-            </Typography>
-            <Paper>
-              <List>
-                {files.map((file, fileIndex) => (
-                  <CoordinatesList file={file} key={`file-${fileIndex}`} />
-                ))}
-              </List>
-            </Paper>
-          </Grid>
-        </Grid>
+        <MapContainer />
       </Paper>
     </Container>
   );

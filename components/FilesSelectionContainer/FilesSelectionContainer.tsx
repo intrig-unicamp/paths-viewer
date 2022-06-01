@@ -15,22 +15,22 @@ import Papa from "papaparse";
 import { ChangeEvent, FunctionComponent } from "react";
 import { useAppDispatch, useAppSelector } from "../../config/hooks";
 import {
-  add,
-  changeColor,
-  remove,
-  selectFiles,
-} from "../../features/files/slice";
+  createEntity,
+  deleteEntity,
+  editEntity,
+  selectEntities,
+} from "../../features/sessions/slice";
 import ColorPicker, { Colors } from "../ColorPicker/ColorPicker";
 import FileUploadButton from "../FileUploadButton/FileUploadButton";
 import Link from "../Link/Link";
 
 const FilesSelectionContainer: FunctionComponent = () => {
   const dispatch = useAppDispatch();
-  const files = useAppSelector(selectFiles);
+  const entities = useAppSelector(selectEntities);
 
   const getRandomColor = (): string => {
     const colors = Object.keys(Colors);
-    const index = Math.floor(Math.random() * colors.length) + 1;
+    const index = Math.floor(Math.random() * colors.length);
     const key = colors[index];
 
     return Colors[key];
@@ -42,10 +42,10 @@ const FilesSelectionContainer: FunctionComponent = () => {
       skipEmptyLines: true,
       complete: ({ data }) => {
         dispatch(
-          add({
-            filename: file.name,
+          createEntity({
+            id: file.name,
             color: getRandomColor(),
-            data,
+            coordinates: data,
           })
         );
       },
@@ -68,18 +68,18 @@ const FilesSelectionContainer: FunctionComponent = () => {
     }
   };
 
-  const onRemoveFile = (index: number) => {
-    dispatch(remove(index));
+  const onRemoveFile = (id: string) => {
+    dispatch(deleteEntity(id));
   };
 
-  const onChangeColor = (index: number, evt: SelectChangeEvent) => {
+  const onChangeColor = (id: string, evt: SelectChangeEvent) => {
     const selectedColor = evt?.target?.value;
 
     if (!selectedColor) {
       return;
     }
 
-    dispatch(changeColor({ index, color: selectedColor }));
+    dispatch(editEntity({ id, color: selectedColor }));
   };
 
   return (
@@ -103,13 +103,13 @@ const FilesSelectionContainer: FunctionComponent = () => {
           className="buttons-stack"
           sx={{ my: 2 }}
         >
-          {files.length < 5 && (
+          {entities.length < 5 && (
             <FileUploadButton
-              variant={files.length === 0 ? "contained" : "outlined"}
+              variant={entities.length === 0 ? "contained" : "outlined"}
               onSelectFile={onSelectFile}
             />
           )}
-          {files.length > 0 && (
+          {entities.length > 0 && (
             <Link href="/static/map">
               <Button variant="contained" size="small" endIcon={<Send />}>
                 {" "}
@@ -119,22 +119,22 @@ const FilesSelectionContainer: FunctionComponent = () => {
           )}
         </Stack>
 
-        {files.length > 0 && (
+        {entities.length > 0 && (
           <List>
-            <ListSubheader>Selected files</ListSubheader>
-            {files.map(({ filename, color }, index) => (
+            <ListSubheader>Selected entities</ListSubheader>
+            {entities.map(({ id, color }, index) => (
               <ListItem key={index} sx={{ pb: 0 }}>
                 <Chip
                   className="filename-item-content"
                   variant="outlined"
                   color="secondary"
-                  label={<Typography noWrap>{filename}</Typography>}
-                  onDelete={() => onRemoveFile(index)}
+                  label={<Typography noWrap>{id}</Typography>}
+                  onDelete={() => onRemoveFile(id)}
                   deleteIcon={<Delete fontSize="small" />}
                 />
                 <ColorPicker
                   selectedColor={color}
-                  onChangeColor={(evt) => onChangeColor(index, evt)}
+                  onChangeColor={(evt) => onChangeColor(id, evt)}
                 />
               </ListItem>
             ))}
