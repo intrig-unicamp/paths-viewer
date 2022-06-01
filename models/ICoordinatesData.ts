@@ -1,9 +1,8 @@
 export interface ICoordinatesData {
-  date?: string;
-  time?: string;
-  id?: string;
-  line?: string;
-  latitude?: string;
-  longitude?: string;
-  speed?: string;
+  id: string;
+  date: string;
+  time: string;
+  latitude: number;
+  longitude: number;
+  speed: number;
 }

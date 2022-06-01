@@ -5,8 +5,6 @@ import { ICoordinatesData } from "../../../models/ICoordinatesData";
 const SessionApi = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query, body } = req;
 
-  console.log(query);
-
   try {
     if (method !== "POST") {
       res.setHeader("Allow", ["POST"]);
@@ -26,8 +24,10 @@ const SessionApi = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(statusCode).send({ statusCode, message });
       }
     }
-  } catch (err: any) {
-    res.status(500).json({ statusCode: 500, message: err.message });
+  } catch (err) {
+    const message = "Error while creating session.";
+    console.error(message, err);
+    res.status(500).json({ statusCode: 500, message });
   }
 };
 
@@ -54,10 +54,14 @@ const addCoordinateToSession = async (
       message: `Coordinate ${coordinatesData.latitude},${coordinatesData.longitude} succesfully added to session ${sessionId}`,
     };
   } catch (err: any) {
-    console.error(
-      `Error while adding coordinate to session ${sessionId}.`,
-      err
-    );
-    return { statusCode: 500, message: err.message };
+    const FirestoreErrorCodeAlreadyExists = 6;
+    if (err.code === FirestoreErrorCodeAlreadyExists) {
+      const message = "Once one coordinate is allowed for each date and time.";
+      console.error(message, err);
+      return { statusCode: 400, message };
+    }
+    const message = `Error while adding coordinate to session ${sessionId}.`;
+    console.error(message, err);
+    return { statusCode: 500, message };
   }
 };

@@ -16,8 +16,10 @@ const SessionApi = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(500).send({ statusCode: 500, message: err.message });
       }
     }
-  } catch (err: any) {
-    res.status(500).json({ statusCode: 500, message: err.message });
+  } catch (err) {
+    const message = "Error while creating session.";
+    console.error(message, err);
+    res.status(500).json({ statusCode: 500, message });
   }
 };
 
