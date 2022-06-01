@@ -13,7 +13,7 @@ const ModeSelector: FunctionComponent = () => {
   const createSession = async () => {
     const id = await SessionService.create();
     dispatch(create(id));
-    router.push(`/dynamic`);
+    router.push(`/dynamic?sessionId=${id}`);
   };
 
   return (
