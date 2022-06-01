@@ -63,7 +63,13 @@ const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
       title: "Example Request",
       content: `curl -X POST \\
     --header "Content-Type: application/json" \\
-    --data '{ "id":"SOME_ID", "date": "2022-01-01", "time": "23:59:59", "longitude": -22.6934614, "latitude": -47.5207821, "speed": 42.1 }' \\
+    --data '{ \\
+      "id":"SOME_ID", \\
+      "date": "2022-01-01", \\
+      "time": "23:59:59", \\
+      "longitude": -22.6934614, \\
+      "latitude": -47.5207821, \\
+      "speed": 42.1 }' \\
     http://localhost:3000/api/session/${sessionId}`,
     },
   ];
@@ -106,6 +112,7 @@ const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
                 borderRadius: 1,
                 backgroundColor: grey[400],
                 width: "100%",
+                fontFamily: "monospace",
               }}
             >
               {content}

@@ -1,15 +1,19 @@
 import { Button, Container, Paper, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { Fragment, FunctionComponent } from "react";
+import { useAppDispatch } from "../../config/hooks";
+import { create } from "../../features/sessions/slice";
 import SessionService from "../../services/SessionService";
 import Link from "../Link/Link";
 
 const ModeSelector: FunctionComponent = () => {
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   const createSession = async () => {
     const id = await SessionService.create();
-    router.push(`/dynamic?sessionId=${id}`);
+    dispatch(create(id));
+    router.push(`/dynamic`);
   };
 
   return (
