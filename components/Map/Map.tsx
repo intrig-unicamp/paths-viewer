@@ -37,6 +37,10 @@ const MapWrapper: FunctionComponent<MapWrapperProps> = ({
   }, [center, ref, zoom, map]);
 
   useEffect(() => {
+    map?.setCenter(center);
+  }, [center]);
+
+  useEffect(() => {
     entities?.forEach(({ coordinates, color }) => {
       new google.maps.Polyline({
         geodesic: true,
@@ -61,10 +65,31 @@ interface MapProps {
 
 const Map: FunctionComponent<MapProps> = ({ entities }) => {
   const NEXT_PUBLIC_GOOGLE_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_API_KEY;
-  const center = {
-    lng: Number(entities[0]?.coordinates?.[0].latitude ?? -47.075616),
-    lat: Number(entities[0]?.coordinates?.[0].longitude ?? -22.8225099),
+  const DEFAULT_CENTER = {
+    lng: -47.075616,
+    lat: -22.8225099,
   };
+
+  const [center, setCenter] = useState<{ lat: number; lng: number }>(
+    DEFAULT_CENTER
+  );
+
+  useEffect(() => {
+    if (entities?.at(0)?.coordinates?.at(0)) {
+      const [{ coordinates }] = entities;
+      const [{ latitude, longitude }] = coordinates;
+
+      if (
+        center.lat === DEFAULT_CENTER.lat &&
+        center.lng === DEFAULT_CENTER.lng
+      ) {
+        setCenter({
+          lng: Number(longitude),
+          lat: Number(latitude),
+        });
+      }
+    }
+  }, [entities]);
 
   if (!NEXT_PUBLIC_GOOGLE_API_KEY) {
     throw new Error("No Google Maps API Key specified.");
