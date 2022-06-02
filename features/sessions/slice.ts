@@ -40,6 +40,9 @@ export const sessionSlice = createSlice({
         state.entities = currentEntities;
       }
     },
+    updateEntities: (state, action: PayloadAction<IEntity[]>) => {
+      state.entities = action.payload;
+    },
     deleteEntity: (state, action: PayloadAction<string>) => {
       const currentEntities = [...state.entities];
 
@@ -50,8 +53,13 @@ export const sessionSlice = createSlice({
   },
 });
 
-export const { createSession, createEntity, editEntity, deleteEntity } =
-  sessionSlice.actions;
+export const {
+  createSession,
+  createEntity,
+  editEntity,
+  updateEntities,
+  deleteEntity,
+} = sessionSlice.actions;
 
 export const selectSession = (state: AppState) => state.session;
 export const selectEntities = (state: AppState) => state.session.entities;

@@ -8,7 +8,12 @@ import {
   Typography,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { Fragment, FunctionComponent, useState } from "react";
+import { collection, doc, onSnapshot } from "firebase/firestore";
+import { Fragment, FunctionComponent, useEffect, useState } from "react";
+import { db } from "../../config/firebaseClient";
+import { useAppDispatch, useAppSelector } from "../../config/hooks";
+import { selectSession, updateEntities } from "../../features/sessions/slice";
+import { ICoordinatesData } from "../../models/ICoordinatesData";
 import MapContainer from "../MapContainer/MapContainer";
 
 interface DynamicModeContainerProps {
@@ -18,6 +23,34 @@ interface DynamicModeContainerProps {
 const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
   sessionId,
 }) => {
+  const dispatch = useAppDispatch();
+  const session = useAppSelector(selectSession);
+
+  const buildEntities = (coordinatesData: ICoordinatesData[]): IEntity[] => {
+    const entitiesIds = [...new Set(coordinatesData?.map(({ id }) => id))];
+    return entitiesIds.map((entityId) => ({
+      id: entityId,
+      color: "#ff0000",
+      coordinates: coordinatesData.filter(({ id }) => id === entityId),
+    }));
+  };
+
+  useEffect(() => {
+    if (sessionId) {
+      const sessionRef = doc(db, "sessions", sessionId);
+      const coordinatesRef = collection(sessionRef, "coordinates");
+
+      const unsubscribe = onSnapshot(coordinatesRef, ({ docs }) => {
+        const coordinatesData = docs.map((doc) =>
+          doc.data()
+        ) as ICoordinatesData[];
+
+        dispatch(updateEntities(buildEntities(coordinatesData)));
+      });
+      return () => unsubscribe();
+    }
+  }, [sessionId]);
+
   return (
     <Container component="main" maxWidth="lg">
       <Paper sx={{ my: 2, p: 1 }}>
