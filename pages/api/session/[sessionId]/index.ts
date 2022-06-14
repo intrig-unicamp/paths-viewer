@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import admin from "../../../../config/firebase";
 import { ICoordinatesData } from "../../../../models/ICoordinatesData";
+import { createEntity } from "./entity";
+import { getEntity } from "./entity/[entityId]";
 
 const SessionApi = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query, body } = req;
@@ -55,6 +57,14 @@ const storeCoordinatesData = async (
     const coordinatesRef = coordinatesCollection.doc(
       `${coordinatesData.date}T${coordinatesData.time}`
     );
+
+    const { statusCode } = await getEntity(sessionId, coordinatesData.id);
+    if (statusCode === 404) {
+      await createEntity(sessionId, {
+        id: coordinatesData.id,
+        label: coordinatesData.id,
+      });
+    }
     transaction.create(coordinatesRef, coordinatesData);
   });
 };
