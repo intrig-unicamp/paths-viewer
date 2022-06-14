@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import admin from "../../../config/firebase";
-import { ICoordinatesData } from "../../../models/ICoordinatesData";
+import admin from "../../../../config/firebase";
+import { ICoordinatesData } from "../../../../models/ICoordinatesData";
 
 const SessionApi = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query, body } = req;
