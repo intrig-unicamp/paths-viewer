@@ -14,6 +14,8 @@ import { db } from "../../config/firebaseClient";
 import { useAppDispatch, useAppSelector } from "../../config/hooks";
 import { selectSession, updateEntities } from "../../features/sessions/slice";
 import { ICoordinatesData } from "../../models/ICoordinatesData";
+import { IEntity } from "../../models/IEntity";
+import { getRandomColor } from "../../utils/colors";
 import MapContainer from "../MapContainer/MapContainer";
 
 interface DynamicModeContainerProps {
@@ -30,7 +32,8 @@ const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
     const entitiesIds = [...new Set(coordinatesData?.map(({ id }) => id))];
     return entitiesIds.map((entityId) => ({
       id: entityId,
-      color: "#ff0000",
+      label: entityId,
+      color: getRandomColor(),
       coordinates: coordinatesData.filter(({ id }) => id === entityId),
     }));
   };

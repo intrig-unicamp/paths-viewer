@@ -6,22 +6,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { FunctionComponent } from "react";
-
-export const Colors = {
-  Gray: "#212529",
-  Red: "#c92a2a",
-  Pink: "#a61e4d",
-  Grape: "#862e9c",
-  Violet: "#5f3dc4",
-  Indigo: "#364fc7",
-  Blue: "#1864ab",
-  Cyan: "#0b7285",
-  Teal: "#087f5b",
-  Green: "#2b8a3e",
-  Lime: "#5c940d",
-  Yellow: "#e67700",
-  Orange: "#d9480f",
-};
+import { Colors } from "../../utils/colors";
 
 interface ColorPickerProps {
   selectedColor: string;
@@ -33,7 +18,7 @@ const ColorPicker: FunctionComponent<ColorPickerProps> = ({
   onChangeColor,
 }) => {
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }}>
+    <FormControl sx={{ my: 1, minWidth: 120 }} required>
       <InputLabel id="color-picker-label">Color</InputLabel>
       <Select
         size="small"

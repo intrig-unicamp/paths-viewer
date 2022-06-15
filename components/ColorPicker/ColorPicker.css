@@ -1,13 +1,5 @@
-.color-picker {
-  margin-left: 8px;
-}
-
 .color-picker div {
   display: flex !important;
-}
-
-label#color-picker-label {
-  padding-left: 10px;
 }
 
 .color-circle {

@@ -1,14 +1,16 @@
-import { Circle, ExpandLess, ExpandMore } from "@mui/icons-material";
+import { Circle, Edit, ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
   Collapse,
   Container,
+  Icon,
+  IconButton,
   List,
-  ListItemButton,
-  ListItemIcon,
   ListItemText,
+  Typography,
 } from "@mui/material";
-import { Fragment, FunctionComponent, useState } from "react";
+import { Fragment, FunctionComponent, useEffect, useState } from "react";
 import { IEntity } from "../../models/IEntity";
+import EntityDialog from "../EntityDialog/EntityDialog";
 
 interface CoordinatesListProps {
   entity: IEntity;
@@ -16,24 +18,63 @@ interface CoordinatesListProps {
 const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({
   entity,
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const { id, color, coordinates } = entity;
+  const [label, setLabel] = useState<string>("");
+  const [color, setColor] = useState<string>("");
+  const [isCollapseOpen, setIsCollapseOpen] = useState<boolean>(false);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const { coordinates } = entity;
+
+  useEffect(() => {
+    setLabel(entity.id);
+    setColor(entity.color);
+  }, [entity]);
 
   return (
     <Fragment>
-      <ListItemButton
-        onClick={() => {
-          setOpen(!open);
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          backgroundColor: "#f1f3f5",
         }}
-        sx={{ backgroundColor: "#f1f3f5" }}
       >
-        <ListItemIcon sx={{ minWidth: 0, mr: 2, color }}>
-          <Circle fontSize="small" />
-        </ListItemIcon>
-        <ListItemText primary={id} />
-        {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Icon sx={{ display: "flex", mx: 1, color }}>
+            <Circle fontSize="small" />
+          </Icon>
+
+          <Typography component="span" variant="body1">
+            {label}
+          </Typography>
+        </div>
+
+        <div>
+          <IconButton
+            onClick={() => {
+              setIsDialogOpen(true);
+            }}
+            sx={{ backgroundColor: "#f1f3f5" }}
+          >
+            <Edit fontSize="small" />
+          </IconButton>
+          <IconButton
+            onClick={() => {
+              setIsCollapseOpen(!isCollapseOpen);
+            }}
+            sx={{ backgroundColor: "#f1f3f5" }}
+          >
+            {isCollapseOpen ? <ExpandLess /> : <ExpandMore />}
+          </IconButton>
+        </div>
+      </div>
+      <Collapse in={isCollapseOpen} timeout="auto" unmountOnExit>
         <Container sx={{ maxHeight: 200, overflow: "auto" }}>
           <List component="div" disablePadding>
             {coordinates?.map((row, index) => (
@@ -45,6 +86,14 @@ const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({
           </List>
         </Container>
       </Collapse>
+      <EntityDialog
+        open={isDialogOpen}
+        setOpen={setIsDialogOpen}
+        label={label}
+        setLabel={setLabel}
+        color={color}
+        setColor={setColor}
+      />
     </Fragment>
   );
 };

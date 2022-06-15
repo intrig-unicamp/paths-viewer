@@ -20,21 +20,14 @@ import {
   editEntity,
   selectEntities,
 } from "../../features/sessions/slice";
-import ColorPicker, { Colors } from "../ColorPicker/ColorPicker";
+import { getRandomColor } from "../../utils/colors";
+import ColorPicker from "../ColorPicker/ColorPicker";
 import FileUploadButton from "../FileUploadButton/FileUploadButton";
 import Link from "../Link/Link";
 
 const FilesSelectionContainer: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const entities = useAppSelector(selectEntities);
-
-  const getRandomColor = (): string => {
-    const colors = Object.keys(Colors);
-    const index = Math.floor(Math.random() * colors.length);
-    const key = colors[index];
-
-    return Colors[key];
-  };
 
   const parseFileData = (file: File) => {
     Papa.parse(file, {
@@ -44,6 +37,7 @@ const FilesSelectionContainer: FunctionComponent = () => {
         dispatch(
           createEntity({
             id: file.name,
+            label: file.name,
             color: getRandomColor(),
             coordinates: data,
           })
@@ -132,10 +126,12 @@ const FilesSelectionContainer: FunctionComponent = () => {
                   onDelete={() => onRemoveFile(id)}
                   deleteIcon={<Delete fontSize="small" />}
                 />
-                <ColorPicker
-                  selectedColor={color}
-                  onChangeColor={(evt) => onChangeColor(id, evt)}
-                />
+                <div style={{ paddingLeft: 8 }}>
+                  <ColorPicker
+                    selectedColor={color}
+                    onChangeColor={(evt) => onChangeColor(id, evt)}
+                  />
+                </div>
               </ListItem>
             ))}
           </List>
