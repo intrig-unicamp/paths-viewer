@@ -9,7 +9,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Fragment, FunctionComponent, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../config/hooks";
+import { selectSession } from "../../features/sessions/slice";
 import { IEntity } from "../../models/IEntity";
+import SessionService from "../../services/SessionService";
 import EntityDialog from "../EntityDialog/EntityDialog";
 
 interface CoordinatesListProps {
@@ -23,11 +26,18 @@ const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({
   const [isCollapseOpen, setIsCollapseOpen] = useState<boolean>(false);
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const { coordinates } = entity;
+  const session = useAppSelector(selectSession);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setLabel(entity.id);
+    setLabel(entity.label);
     setColor(entity.color);
   }, [entity]);
+
+  const saveEntity = async (entityData: IEntity) => {
+    await SessionService.editEntity(session.id, entityData);
+    setIsDialogOpen(false);
+  };
 
   return (
     <Fragment>
@@ -87,12 +97,10 @@ const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({
         </Container>
       </Collapse>
       <EntityDialog
-        open={isDialogOpen}
-        setOpen={setIsDialogOpen}
-        label={label}
-        setLabel={setLabel}
-        color={color}
-        setColor={setColor}
+        entity={entity}
+        isDialogOpen={isDialogOpen}
+        onCancel={() => setIsDialogOpen(false)}
+        onSave={saveEntity}
       />
     </Fragment>
   );

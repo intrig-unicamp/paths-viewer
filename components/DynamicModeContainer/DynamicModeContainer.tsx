@@ -11,11 +11,10 @@ import { grey } from "@mui/material/colors";
 import { collection, doc, onSnapshot } from "firebase/firestore";
 import { Fragment, FunctionComponent, useEffect, useState } from "react";
 import { db } from "../../config/firebaseClient";
-import { useAppDispatch, useAppSelector } from "../../config/hooks";
-import { selectSession, updateEntities } from "../../features/sessions/slice";
+import { useAppDispatch } from "../../config/hooks";
+import { updateEntities } from "../../features/sessions/slice";
 import { ICoordinatesData } from "../../models/ICoordinatesData";
 import { IEntity } from "../../models/IEntity";
-import { getRandomColor } from "../../utils/colors";
 import MapContainer from "../MapContainer/MapContainer";
 
 interface DynamicModeContainerProps {
@@ -26,15 +25,15 @@ const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
   sessionId,
 }) => {
   const dispatch = useAppDispatch();
-  const session = useAppSelector(selectSession);
 
-  const buildEntities = (coordinatesData: ICoordinatesData[]): IEntity[] => {
-    const entitiesIds = [...new Set(coordinatesData?.map(({ id }) => id))];
-    return entitiesIds.map((entityId) => ({
-      id: entityId,
-      label: entityId,
-      color: getRandomColor(),
-      coordinates: coordinatesData.filter(({ id }) => id === entityId),
+  const buildEntities = (
+    entitiesData: IEntity[],
+    coordinatesData: ICoordinatesData[]
+  ): IEntity[] => {
+    const entitiesIds = [...new Set(entitiesData?.map(({ id }) => id))];
+    return entitiesData.map((entity) => ({
+      ...entity,
+      coordinates: coordinatesData.filter(({ id }) => id === entity.id),
     }));
   };
 
@@ -42,15 +41,20 @@ const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
     if (sessionId) {
       const sessionRef = doc(db, "sessions", sessionId);
       const coordinatesRef = collection(sessionRef, "coordinates");
+      const entitiesRef = collection(sessionRef, "entities");
+      let coordinatesData: ICoordinatesData[] = [];
 
-      const unsubscribe = onSnapshot(coordinatesRef, ({ docs }) => {
-        const coordinatesData = docs.map((doc) =>
-          doc.data()
-        ) as ICoordinatesData[];
-
-        dispatch(updateEntities(buildEntities(coordinatesData)));
+      const unsubscribeCoordinates = onSnapshot(coordinatesRef, ({ docs }) => {
+        coordinatesData = docs.map((doc) => doc.data()) as ICoordinatesData[];
       });
-      return () => unsubscribe();
+      const unsubscribeEntities = onSnapshot(entitiesRef, ({ docs }) => {
+        const entitiesData = docs.map((doc) => doc.data()) as IEntity[];
+        dispatch(updateEntities(buildEntities(entitiesData, coordinatesData)));
+      });
+      return () => {
+        unsubscribeCoordinates();
+        unsubscribeEntities();
+      };
     }
   }, [sessionId]);
 

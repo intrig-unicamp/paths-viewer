@@ -6,50 +6,37 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
 import { FunctionComponent, useEffect, useState } from "react";
+import { IEntity } from "../../models/IEntity";
 import ColorPicker from "../ColorPicker/ColorPicker";
 
 interface EntityDialogProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-  label: string;
-  setLabel: (label: string) => void;
-  color: string;
-  setColor: (color: string) => void;
+  entity: IEntity;
+  isDialogOpen: boolean;
+  onSave: (entity: IEntity) => void;
+  onCancel: () => void;
 }
 const EntityDialog: FunctionComponent<EntityDialogProps> = ({
-  open,
-  setOpen,
-  label,
-  setLabel,
-  color,
-  setColor,
+  entity,
+  isDialogOpen,
+  onSave,
+  onCancel,
 }) => {
+  const { color, label } = entity;
   const [currentColor, setCurrentColor] = useState<string>("");
   const [currentLabel, setCurrentLabel] = useState<string>("");
 
   useEffect(() => {
     setCurrentColor(color);
     setCurrentLabel(label);
-  }, [open]);
-
-  const handleSubmit = () => {
-    setColor(currentColor);
-    setLabel(currentLabel);
-    setOpen(false);
-  };
+  }, [isDialogOpen]);
 
   return (
     <div>
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog open={isDialogOpen} onClose={onCancel}>
         <DialogTitle>Edit entity</DialogTitle>
 
         <DialogContent>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             <div
               style={{
                 display: "flex",
@@ -77,7 +64,9 @@ const EntityDialog: FunctionComponent<EntityDialogProps> = ({
               />
             </div>
             <Button
-              onClick={handleSubmit}
+              onClick={() =>
+                onSave({ ...entity, label: currentLabel, color: currentColor })
+              }
               type="button"
               fullWidth
               variant="contained"
@@ -87,7 +76,7 @@ const EntityDialog: FunctionComponent<EntityDialogProps> = ({
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={onCancel}>Cancel</Button>
         </DialogActions>
       </Dialog>
     </div>
