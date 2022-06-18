@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import admin from "../../../../config/firebase";
 import { ICoordinatesData } from "../../../../models/ICoordinatesData";
+import { CustomError, ErrorCode } from "../../../../utils/error";
 import { createEntity } from "./entity";
 import { getEntity } from "./entity/[entityId]";
 
@@ -54,18 +55,34 @@ const storeCoordinatesData = async (
 
   await db.runTransaction(async (transaction) => {
     const coordinatesCollection = sessionRef.collection("coordinates");
-    const coordinatesRef = coordinatesCollection.doc(
-      `${coordinatesData.date}T${coordinatesData.time}`
-    );
 
-    const { statusCode } = await getEntity(sessionId, coordinatesData.id);
-    if (statusCode === 404) {
-      await createEntity(sessionId, {
-        id: coordinatesData.id,
-        label: coordinatesData.id,
+    const [lastRecordDoc] = (
+      await coordinatesCollection.orderBy("date", "desc").limit(1).get()
+    ).docs;
+    const lastRecordData = lastRecordDoc.data() as ICoordinatesData;
+
+    const isNewRecordBeforeLastOne =
+      lastRecordData.date >= coordinatesData.date &&
+      lastRecordData.time >= coordinatesData.time;
+    if (isNewRecordBeforeLastOne) {
+      throw new CustomError({
+        code: ErrorCode.DATE_AND_TIME_AFTER_PREVIOUS_ONE,
+        message: `New coordinates date and time should be after ${lastRecordDoc.id}.`,
       });
+    } else {
+      const coordinatesRef = coordinatesCollection.doc(
+        `${coordinatesData.date}T${coordinatesData.time}`
+      );
+
+      const { statusCode } = await getEntity(sessionId, coordinatesData.id);
+      if (statusCode === 404) {
+        await createEntity(sessionId, {
+          id: coordinatesData.id,
+          label: coordinatesData.id,
+        });
+      }
+      transaction.create(coordinatesRef, coordinatesData);
     }
-    transaction.create(coordinatesRef, coordinatesData);
   });
 };
 
@@ -86,6 +103,8 @@ const addCoordinateToSession = async (
       const message = "Once one coordinate is allowed for each date and time.";
       console.error(message, err);
       return { statusCode: 400, message };
+    } else if (err.code === ErrorCode.DATE_AND_TIME_AFTER_PREVIOUS_ONE) {
+      return { statusCode: 400, message: err.message };
     }
     const message = `Error while adding coordinate to session ${sessionId}.`;
     console.error(message, err);
