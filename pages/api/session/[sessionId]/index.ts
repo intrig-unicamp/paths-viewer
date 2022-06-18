@@ -59,11 +59,11 @@ const storeCoordinatesData = async (
     const [lastRecordDoc] = (
       await coordinatesCollection.orderBy("date", "desc").limit(1).get()
     ).docs;
-    const lastRecordData = lastRecordDoc.data() as ICoordinatesData;
+    const lastRecordData = lastRecordDoc?.data() as ICoordinatesData;
 
     const isNewRecordBeforeLastOne =
-      lastRecordData.date >= coordinatesData.date &&
-      lastRecordData.time >= coordinatesData.time;
+      lastRecordData?.date >= coordinatesData.date &&
+      lastRecordData?.time >= coordinatesData.time;
     if (isNewRecordBeforeLastOne) {
       throw new CustomError({
         code: ErrorCode.DATE_AND_TIME_AFTER_PREVIOUS_ONE,

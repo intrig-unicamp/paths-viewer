@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import admin from "../../../../../config/firebase";
 import { IEntity } from "../../../../../models/IEntity";
+import { getRandomColor } from "../../../../../utils/colors";
 
 const EntityApi = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method, query, body } = req;
@@ -68,14 +69,16 @@ export const createEntity = async (
   sessionId: string,
   body: Partial<IEntity>
 ): Promise<{ statusCode: number; message: string; id?: string }> => {
-  const { id } = body;
+  const { id, color } = body;
   try {
     const db = admin.firestore();
     const entitiesRef = db.collection(`sessions/${sessionId}/entities`);
     const entities = await entitiesRef.get();
     const entityId = id ?? String(entities.size + 1);
 
-    entitiesRef.doc(entityId.toString()).create({ ...body, id: entityId });
+    entitiesRef
+      .doc(entityId.toString())
+      .create({ ...body, color: color ?? getRandomColor(), id: entityId });
 
     return {
       statusCode: 201,
