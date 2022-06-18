@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { AppState } from "../../config/store";
+import { ICoordinatesData } from "../../models/ICoordinatesData";
 import { IEntity } from "../../models/IEntity";
 export interface SessionState {
   id: string;
@@ -50,6 +51,22 @@ export const sessionSlice = createSlice({
         (entity) => entity.id !== action.payload
       );
     },
+    appendCoordinateToEntity: (
+      state,
+      action: PayloadAction<ICoordinatesData>
+    ) => {
+      const currentEntities = [...state.entities];
+      const editedEntity = currentEntities.find(
+        (entity) => entity.id === action.payload.id
+      );
+
+      if (editedEntity) {
+        currentEntities[currentEntities.indexOf(editedEntity)].coordinates.push(
+          action.payload
+        );
+        state.entities = currentEntities;
+      }
+    },
   },
 });
 
@@ -59,6 +76,7 @@ export const {
   editEntity,
   updateEntities,
   deleteEntity,
+  appendCoordinateToEntity,
 } = sessionSlice.actions;
 
 export const selectSession = (state: AppState) => state.session;
