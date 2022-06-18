@@ -12,7 +12,10 @@ import { collection, doc, onSnapshot } from "firebase/firestore";
 import { Fragment, FunctionComponent, useEffect, useState } from "react";
 import { db } from "../../config/firebaseClient";
 import { useAppDispatch } from "../../config/hooks";
-import { updateEntities } from "../../features/sessions/slice";
+import {
+  appendCoordinateToEntity,
+  updateEntities,
+} from "../../features/sessions/slice";
 import { ICoordinatesData } from "../../models/ICoordinatesData";
 import { IEntity } from "../../models/IEntity";
 import MapContainer from "../MapContainer/MapContainer";
@@ -30,7 +33,6 @@ const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
     entitiesData: IEntity[],
     coordinatesData: ICoordinatesData[]
   ): IEntity[] => {
-    const entitiesIds = [...new Set(entitiesData?.map(({ id }) => id))];
     return entitiesData.map((entity) => ({
       ...entity,
       coordinates: coordinatesData.filter(({ id }) => id === entity.id),
@@ -46,6 +48,10 @@ const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
 
       const unsubscribeCoordinates = onSnapshot(coordinatesRef, ({ docs }) => {
         coordinatesData = docs.map((doc) => doc.data()) as ICoordinatesData[];
+        const lastRecord = coordinatesData?.at(-1);
+        if (lastRecord) {
+          dispatch(appendCoordinateToEntity(lastRecord));
+        }
       });
       const unsubscribeEntities = onSnapshot(entitiesRef, ({ docs }) => {
         const entitiesData = docs.map((doc) => doc.data()) as IEntity[];
