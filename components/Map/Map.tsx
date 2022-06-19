@@ -54,8 +54,8 @@ const MapWrapper: FunctionComponent<MapWrapperProps> = ({
           lng: Number(row.longitude),
         })),
         strokeColor: color,
-        strokeOpacity: 1,
-        strokeWeight: 1,
+        strokeOpacity: 0.5,
+        strokeWeight: 2,
       });
     });
   }, [entities, map]);
