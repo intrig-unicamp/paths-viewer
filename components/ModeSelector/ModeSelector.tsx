@@ -2,7 +2,7 @@ import { Button, Container, Paper, Stack, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { Fragment, FunctionComponent } from "react";
 import { useAppDispatch } from "../../config/hooks";
-import { createSession } from "../../features/sessions/slice";
+import { createSession, updateEntities } from "../../features/sessions/slice";
 import SessionService from "../../services/SessionService";
 import Link from "../Link/Link";
 
@@ -13,7 +13,13 @@ const ModeSelector: FunctionComponent = () => {
   const handleDynamicButtonClick = async () => {
     const id = await SessionService.create();
     dispatch(createSession(id));
+    dispatch(updateEntities([]));
     router.push(`/dynamic?sessionId=${id}`);
+  };
+
+  const handleStaticButtonClick = async () => {
+    dispatch(updateEntities([]));
+    router.push(`/static`);
   };
 
   return (
@@ -26,6 +32,7 @@ const ModeSelector: FunctionComponent = () => {
         >
           <ModeCard
             href="/static"
+            onButtonClick={handleStaticButtonClick}
             buttonText="Static"
             description="You can load up to 5 CSV files with coordinates to display on map (recommended when the data doesn't change after rendering)."
           />
