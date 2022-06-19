@@ -56,10 +56,19 @@ const storeCoordinatesData = async (
   await db.runTransaction(async (transaction) => {
     const coordinatesCollection = sessionRef.collection("coordinates");
 
-    const [lastRecordDoc] = (
-      await coordinatesCollection.orderBy("date", "desc").limit(1).get()
-    ).docs;
-    const lastRecordData = lastRecordDoc?.data() as ICoordinatesData;
+    const sortOperator = (
+      { date: date1, time: time1 }: ICoordinatesData,
+      { date: date2, time: time2 }: ICoordinatesData
+    ): number => {
+      return `${date1}T${time1}` - `${date2}T${time2}`;
+    };
+
+    const lastRecordData =
+      (await coordinatesCollection.get()).docs
+        .map((doc) => doc.data() as ICoordinatesData)
+        .filter(({ id }) => id === coordinatesData.id)
+        .sort(sortOperator)
+        .at(-1) ?? {};
 
     const isNewRecordBeforeLastOne =
       lastRecordData?.date >= coordinatesData.date &&
@@ -67,11 +76,11 @@ const storeCoordinatesData = async (
     if (isNewRecordBeforeLastOne) {
       throw new CustomError({
         code: ErrorCode.DATE_AND_TIME_AFTER_PREVIOUS_ONE,
-        message: `New coordinates date and time should be after ${lastRecordDoc.id}.`,
+        message: `New coordinates date and time should be after ${lastRecordData.id}.`,
       });
     } else {
       const coordinatesRef = coordinatesCollection.doc(
-        `${coordinatesData.date}T${coordinatesData.time}`
+        `${coordinatesData.date}T${coordinatesData.time}E${coordinatesData.id}`
       );
 
       const { statusCode } = await getEntity(sessionId, coordinatesData.id);
