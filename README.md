@@ -1,23 +1,92 @@
-# Getting Started with Create React App
+# Paths Viewer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains material related to visualization interface for objects tracemaps analysis.
 
-## Available Scripts
+_TODO: insert tool figures_
+
+It has two operation modes:
+
+1. post events: process CSV files with spatial time data and;
+2. real time: directly communicates with the object to record its geolocation data.
+
+Both operation modes share objects visualization over a 2D map. It can be used by any researcher that needs tracemaps visualization.
+
+It is being developed as a Course Final Work for the Undergraduation of William Quintas, oriented by [Prof. Dr. Christian Rothenberg](https://www.dca.fee.unicamp.br/~chesteve/).
+
+# Dependencies
+
+- [Typescript 4.6.4](https://www.npmjs.com/package/typescript/v/4.6.4)
+- [React 18.1.0](https://www.npmjs.com/package/react/v/18.1.0)
+- [Next 12.1.6](https://nextjs.org/)
+- [ReduxJS Toolkit 1.8.2](https://www.npmjs.com/package/@reduxjs/toolkit/v/1.8.2)
+- [Google Maps React Wrapper 1.1.33](https://developers.google.com/maps/documentation/javascript/react-map)
+- [Firebase SDK 9.8.2](https://firebase.google.com/docs/reference/js)
+- [Firebase Admin 10.2.0](https://firebase.google.com/docs/reference/admin)
+
+# Setup
+
+- Download and install **Node**. Recommended to use **nvm** from [here](https://github.com/nvm-sh/nvm#installing-and-updating).
+  - You can follow [this tutorial](https://heynode.com/tutorial/install-nodejs-locally-nvm/) to install nvm.
+  - You might make sure you have nvm and that it’s available from your command line. You can check this by simply running:
+    `$ command -v nvm`
+  - After that, you’ll need to make sure you install Node. You can make this by running:
+    `$ nvm install --lts`
+- Clone this repository.
+  `$ git clone https://github.com/williamquintas/DRL-UAVs-Placer.git /path/to/repo`
+- Install the dependencies.
+
+```
+cd /path/to/repo
+npm install
+```
+
+# Files
+
+This repository files are structured as follows:
+
+```
+|── components
+|   |── ...
+|── config
+|   |── firebase.ts
+|   |── firebaseClient.ts
+|   |── hooks.ts
+|   |── store.ts
+|   |── theme.ts
+|── css
+|   |── index.css
+|── features
+|   |── sessions
+|   |   |── slice.ts
+|── models
+|   |── ...
+|── pages
+|   |── api
+|   |── post-events
+|   |── real-time
+|   |── index.tsx
+|── public
+|── services
+|   |── SessionService.ts
+|── simulations
+|   |── ...
+|── utils
+|   |── ...
+```
+
+_TODO: describe directories purposes_
+
+# Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run dev`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -27,44 +96,14 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `npm run start`
 
-### `npm run eject`
+Serves the built folder.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The page won't reload when you make changes.\
+Requires to run `npm run build` before.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Simulations
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+_TODO: describe simulations and how to run it_
