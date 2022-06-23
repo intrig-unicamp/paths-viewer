@@ -10,7 +10,7 @@ export default FilesSelectionPage;
 export async function getStaticProps() {
   return {
     props: {
-      title: "Static Mode",
+      title: "Post Events Mode",
     },
   };
 }

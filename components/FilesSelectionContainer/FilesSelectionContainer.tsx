@@ -29,6 +29,8 @@ const FilesSelectionContainer: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const entities = useAppSelector(selectEntities);
 
+  const MAX_FILES_ALLOWED = Number.MAX_SAFE_INTEGER;
+
   const parseFileData = (file: File) => {
     Papa.parse(file, {
       header: true,
@@ -85,10 +87,13 @@ const FilesSelectionContainer: FunctionComponent = () => {
           align="center"
           sx={{ pb: 1, fontWeight: "bold" }}
         >
-          Static Mode
+          Post Events Mode
         </Typography>
         <Typography component="span" variant="body2" sx={{ px: 1 }}>
-          To start, select up to 5 CSV files with paths to render.
+          Select{" "}
+          {MAX_FILES_ALLOWED !== Number.MAX_SAFE_INTEGER &&
+            `up to ${MAX_FILES_ALLOWED}`}{" "}
+          CSV files with paths to render, one by one.
         </Typography>
 
         <Stack
@@ -97,14 +102,14 @@ const FilesSelectionContainer: FunctionComponent = () => {
           className="buttons-stack"
           sx={{ my: 2 }}
         >
-          {entities.length < 5 && (
+          {entities.length < MAX_FILES_ALLOWED && (
             <FileUploadButton
               variant={entities.length === 0 ? "contained" : "outlined"}
               onSelectFile={onSelectFile}
             />
           )}
           {entities.length > 0 && (
-            <Link href="/static/map">
+            <Link href="/post-events/map">
               <Button variant="contained" size="small" endIcon={<Send />}>
                 {" "}
                 View paths on map{" "}

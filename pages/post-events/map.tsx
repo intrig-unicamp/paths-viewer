@@ -12,7 +12,7 @@ const MapViewerPage: FunctionComponent = () => {
 
   useEffect(() => {
     if (!entities || entities.length === 0) {
-      router.push("/static");
+      router.push("/post-events");
     }
   }, [entities]);
 
@@ -41,7 +41,7 @@ export default MapViewerPage;
 export async function getStaticProps() {
   return {
     props: {
-      title: "Map on Static Mode",
+      title: "Map on Post Events Mode",
     },
   };
 }

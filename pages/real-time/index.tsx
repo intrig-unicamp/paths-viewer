@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
-import DynamicModeContainer from "../../components/DynamicModeContainer/DynamicModeContainer";
+import RealTimeModeContainer from "../../components/RealTimeModeContainer/RealTimeModeContainer";
 import { useAppDispatch, useAppSelector } from "../../config/hooks";
 import { createSession, selectSession } from "../../features/sessions/slice";
 
-const DynamicModePage: FunctionComponent = () => {
+const RealTimeModePage: FunctionComponent = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const session = useAppSelector(selectSession);
@@ -25,15 +25,15 @@ const DynamicModePage: FunctionComponent = () => {
     return <p>Session not initialized or not found. Go back to main page.</p>;
   }
 
-  return <DynamicModeContainer sessionId={String(sessionId) ?? ""} />;
+  return <RealTimeModeContainer sessionId={String(sessionId) ?? ""} />;
 };
 
-export default DynamicModePage;
+export default RealTimeModePage;
 
 export async function getStaticProps() {
   return {
     props: {
-      title: "Session on Dynamic Mode",
+      title: "Session on Real Time Mode",
     },
   };
 }

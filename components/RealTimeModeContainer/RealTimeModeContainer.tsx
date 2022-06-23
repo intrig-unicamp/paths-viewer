@@ -20,11 +20,11 @@ import { ICoordinatesData } from "../../models/ICoordinatesData";
 import { IEntity } from "../../models/IEntity";
 import MapContainer from "../MapContainer/MapContainer";
 
-interface DynamicModeContainerProps {
+interface RealTimeModeContainerProps {
   sessionId: string;
 }
 
-const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
+const RealTimeModeContainer: FunctionComponent<RealTimeModeContainerProps> = ({
   sessionId,
 }) => {
   const dispatch = useAppDispatch();
@@ -73,7 +73,7 @@ const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
           align="center"
           sx={{ pb: 1, fontWeight: "bold" }}
         >
-          Dynamic Mode
+          Real Time Mode
         </Typography>
         <HelpCard sessionId={sessionId} />
         <MapContainer />
@@ -82,7 +82,7 @@ const DynamicModeContainer: FunctionComponent<DynamicModeContainerProps> = ({
   );
 };
 
-export default DynamicModeContainer;
+export default RealTimeModeContainer;
 
 const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
   const [open, setOpen] = useState<boolean>(false);

@@ -10,16 +10,16 @@ const ModeSelector: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const handleDynamicButtonClick = async () => {
+  const handlePostEventsModeButtonClick = async () => {
+    dispatch(updateEntities([]));
+    router.push(`/post-events`);
+  };
+
+  const handleRealtimeModeButtonClick = async () => {
     const id = await SessionService.create();
     dispatch(createSession(id));
     dispatch(updateEntities([]));
-    router.push(`/dynamic?sessionId=${id}`);
-  };
-
-  const handleStaticButtonClick = async () => {
-    dispatch(updateEntities([]));
-    router.push(`/static`);
+    router.push(`/real-time?sessionId=${id}`);
   };
 
   return (
@@ -31,16 +31,16 @@ const ModeSelector: FunctionComponent = () => {
           sx={{ display: "flex", alignItems: "center", my: 2 }}
         >
           <ModeCard
-            href="/static"
-            onButtonClick={handleStaticButtonClick}
-            buttonText="Static"
-            description="You can load up to 5 CSV files with coordinates to display on map (recommended when the data doesn't change after rendering)."
+            href="/post-events"
+            onButtonClick={handlePostEventsModeButtonClick}
+            buttonText="Post events"
+            description="You can load CSV files with coordinates to display on map."
           />
           <ModeCard
-            href="/dynamic"
-            onButtonClick={handleDynamicButtonClick}
-            buttonText="Dynamic"
-            description="A session will begin and you can send coordinates via API to display on map."
+            href="/real-time"
+            onButtonClick={handleRealtimeModeButtonClick}
+            buttonText="Real time"
+            description="Start a monitoring session and receive devices coordinates via API to display on map."
           />
         </Stack>
       </Paper>
@@ -61,7 +61,7 @@ const SelectorHeader: FunctionComponent = () => (
       Welcome to Paths viewer!
     </Typography>
     <Typography component="span" variant="body2" sx={{ px: 1 }}>
-      To start, select which type of data visualization do you need.
+      To start, select which type of operation mode do you need.
     </Typography>
   </Fragment>
 );
