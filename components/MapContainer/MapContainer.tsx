@@ -10,12 +10,18 @@ const MapContainer: FunctionComponent = () => {
   const sortOperator = (
     { date: date1, time: time1 }: ICoordinatesData,
     { date: date2, time: time2 }: ICoordinatesData
-  ): number => `${date1}T${time1}` - `${date2}T${time2}`;
+  ): number => {
+    const datetime1 = `${date1}T${time1}`;
+    const datetime2 = `${date2}T${time2}`;
+    return datetime2.localeCompare(datetime1);
+  };
 
   const session = useAppSelector(selectSession);
   const { date, time } =
     session?.entities
-      ?.map(({ coordinates }) => coordinates?.at(-1))
+      ?.map(
+        ({ coordinates }) => coordinates?.at(-1) ?? ({} as ICoordinatesData)
+      )
       ?.sort(sortOperator)
       ?.at(-1) ?? {};
 

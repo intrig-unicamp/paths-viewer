@@ -60,7 +60,9 @@ const storeCoordinatesData = async (
       { date: date1, time: time1 }: ICoordinatesData,
       { date: date2, time: time2 }: ICoordinatesData
     ): number => {
-      return `${date1}T${time1}` - `${date2}T${time2}`;
+      const datetime1 = `${date1}T${time1}`;
+      const datetime2 = `${date2}T${time2}`;
+      return datetime2.localeCompare(datetime1);
     };
 
     const lastRecordData =
@@ -68,7 +70,7 @@ const storeCoordinatesData = async (
         .map((doc) => doc.data() as ICoordinatesData)
         .filter(({ id }) => id === coordinatesData.id)
         .sort(sortOperator)
-        .at(-1) ?? {};
+        .at(-1) ?? ({} as ICoordinatesData);
 
     const isNewRecordBeforeLastOne =
       lastRecordData?.date >= coordinatesData.date &&
