@@ -4,5 +4,4 @@ export interface ICoordinatesData {
   time: string;
   latitude: number;
   longitude: number;
-  speed: number;
 }
