@@ -29,3 +29,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+simulations/**/process_*.py
+simulations/**/raw_data.csv
+simulations/belo_horizonte/VR*.csv
