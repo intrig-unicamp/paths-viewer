@@ -36,15 +36,13 @@ if session_id is None:
     raise Exception('Session id not specified.')
 
 def get_payload_from_row(row: list) -> dict:
-    date, time, id, line, longitude, latitude, speed = row
+    id, date, time, latitude, longitude = row
     payload = {
+        'id': id,
         'date': date,
         'time': time,
-        'id': id,
-        'line': line,
-        'longitude': longitude,
         'latitude': latitude,
-        'speed': speed
+        'longitude': longitude,
     }
     return payload
 
@@ -66,7 +64,7 @@ def get_milliseconds_from_datetime(date: str , time: str) -> int:
 def main():
     coordinates_list = []
 
-    for object_index in range(1, objects_quantity):
+    for object_index in range(1, objects_quantity+1):
         path = f'{city.lower()}/object_{object_index}.csv'
 
         with open(path, 'r', encoding='utf-8') as csv_file:
