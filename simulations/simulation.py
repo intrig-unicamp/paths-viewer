@@ -85,8 +85,6 @@ def main():
         delta = next_ms - current_ms
 
         sleep((1.0/simulation_velocity) * (delta.total_seconds()))
-
-        print(send_request(payload))
         current_ms = next_ms
 
 if __name__ == '__main__':

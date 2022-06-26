@@ -8,9 +8,10 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import { Fragment, FunctionComponent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../config/hooks";
-import { selectSession } from "../../features/sessions/slice";
+import { editEntity, selectSession } from "../../features/sessions/slice";
 import { IEntity } from "../../models/IEntity";
 import SessionService from "../../services/SessionService";
 import EntityDialog from "../EntityDialog/EntityDialog";
@@ -28,6 +29,8 @@ const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({
   const { coordinates } = entity;
   const session = useAppSelector(selectSession);
   const dispatch = useAppDispatch();
+  const router = useRouter();
+  const isPostEventsMode = router.route.indexOf("real-time") >= 0;
 
   useEffect(() => {
     setLabel(entity.label);
@@ -35,7 +38,12 @@ const CoordinatesList: FunctionComponent<CoordinatesListProps> = ({
   }, [entity]);
 
   const saveEntity = async (entityData: IEntity) => {
-    await SessionService.editEntity(session.id, entityData);
+    if (isPostEventsMode) {
+      await SessionService.editEntity(session.id, entityData);
+    } else {
+      dispatch(editEntity(entityData));
+    }
+
     setIsDialogOpen(false);
   };
 

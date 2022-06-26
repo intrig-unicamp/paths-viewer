@@ -33,7 +33,7 @@ const FilesSelectionContainer: FunctionComponent = () => {
 
   const parseFileData = (file: File) => {
     Papa.parse(file, {
-      header: true,
+      header: false,
       skipEmptyLines: true,
       complete: ({ data }) => {
         dispatch(
@@ -41,7 +41,10 @@ const FilesSelectionContainer: FunctionComponent = () => {
             id: file.name,
             label: file.name,
             color: getRandomColor(),
-            coordinates: data,
+            coordinates: data.map((row: string[]) => {
+              const [id, date, time, latitude, longitude] = row;
+              return { id, date, time, latitude, longitude };
+            }),
           })
         );
       },
