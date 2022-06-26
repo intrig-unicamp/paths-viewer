@@ -28,7 +28,6 @@ objects_quantity = int(args.objects_quantity) \
 simulation_velocity = int(args.simulation_velocity) \
     if args.simulation_velocity is not None \
         and args.simulation_velocity.isnumeric() \
-        and int(args.simulation_velocity) <= MAX_OBJECTS \
     else 120
 session_id = args.session_id
 
@@ -84,6 +83,9 @@ def main():
         next_ms = get_milliseconds_from_datetime(payload['date'], payload['time'])
         delta = next_ms - current_ms
 
+        response = send_request(payload)
+        print(response)
+        
         sleep((1.0/simulation_velocity) * (delta.total_seconds()))
         current_ms = next_ms
 
