@@ -2,14 +2,17 @@
 
 This repository contains material related to visualization interface for objects tracemaps analysis.
 
-_TODO: insert tool figures_
+<img src="https://user-images.githubusercontent.com/20072456/175796510-af798420-bac5-46a0-bf79-03f862fcc069.png" alt="Paths Viewer - Home screen" width="40%" />
 
 It has two operation modes:
 
 1. post events: process CSV files with spatial time data and;
+<img src="https://user-images.githubusercontent.com/20072456/175796518-c275846a-6c61-4a86-b41f-b87bfe173e66.png" alt="Paths Viewer - Post Events Mode with selected files" width="40%" />
 2. real time: directly communicates with the object to record its geolocation data.
+<img src="https://user-images.githubusercontent.com/20072456/175796516-6a30624a-77b6-495a-9646-4ebddd3107a8.png" alt="Paths Viewer - Real Time Mode" width="40%" />
 
 Both operation modes share objects visualization over a 2D map. It can be used by any researcher that needs tracemaps visualization.
+<img src="https://user-images.githubusercontent.com/20072456/175796520-0dbb2ee5-cba2-4d60-b41a-fa3059da2736.png" alt="Paths Viewer - Rome" width="40%" />
 
 It is being developed as a Course Final Work for the Undergraduation of William Quintas, oriented by [Prof. Dr. Christian Rothenberg](https://www.dca.fee.unicamp.br/~chesteve/).
 
