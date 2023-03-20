@@ -1,7 +1,6 @@
 {
   "name": "paths-viewer",
   "version": "0.1.0",
-  "private": false,
   "dependencies": {
     "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.9.0",
@@ -48,5 +47,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "packageManager": "yarn@3.5.0"
 }
