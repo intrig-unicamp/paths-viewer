@@ -101,7 +101,6 @@ const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
           time: "string (HH:MM:SS)",
           latitude: "number",
           longitude: "number",
-          speed: "number",
         },
         null,
         4
@@ -116,8 +115,7 @@ const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
       "date": "2022-01-02",
       "time": "23:59:59",
       "latitude": -22.8225099,
-      "longitude": -47.075616,
-      "speed": 42.1
+      "longitude": -47.075616
     }'`,
     },
   ];

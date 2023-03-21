@@ -6,10 +6,10 @@ const Footer: FunctionComponent = () => (
     Made by{" "}
     {
       <Link
-        href="https://github.com/williamquintas/paths-viewer"
+        href="https://github.com/intrig-unicamp/paths-viewer"
         target="_blank"
       >
-        William Quintas de Melo
+        INTRIG Research Group
       </Link>
     }
   </Box>
