@@ -86,11 +86,12 @@ export default RealTimeModeContainer;
 
 const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
   const [open, setOpen] = useState<boolean>(false);
+  const appUrl = window.location.origin;
 
   const sections = [
     {
       title: "Endpoint",
-      content: `POST  http://localhost:3000/api/session/${sessionId}`,
+      content: `POST  ${appUrl}/api/session/${sessionId}`,
     },
     {
       title: "POST Body Model",
@@ -108,7 +109,7 @@ const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
     },
     {
       title: "Example Request",
-      content: `curl -X POST http://localhost:3000/api/session/${sessionId} \\
+      content: `curl -X POST ${appUrl}/api/session/${sessionId} \\
     -H "Content-Type: application/json" \\
     -d '{
       "id": "SOME_ID",
