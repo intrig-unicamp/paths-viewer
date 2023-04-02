@@ -1,112 +1,83 @@
-# Paths Viewer
+# PathsViewer
 
-This repository contains material related to visualization interface for objects tracemaps analysis.
+**PathsViewer** é uma ferramenta para visualização de dados espaço-temporais **em tempo real** ou **pós-eventos**. Essa ferramenta busca suprir a demanda por ferramentas de visualização de trajetórias de objetos, em vista do grande interesse em pesquisas nesse tipo de dado.
 
-<img src="https://user-images.githubusercontent.com/20072456/175796510-af798420-bac5-46a0-bf79-03f862fcc069.png" alt="Paths Viewer - Home screen" width="40%" />
+É possível utilizar conjuntos de dados variados, com estruturas diversas, tais como _traces_ de 5G georeferenciados e trajetórias de veículos.
 
-It has two operation modes:
+Esse repositório contém todo o código da ferramenta, como também instruções para execução, _deploy_, contribuição e demais informações.
 
-1. post events: process CSV files with spatial time data and;
-<img src="https://user-images.githubusercontent.com/20072456/175796518-c275846a-6c61-4a86-b41f-b87bfe173e66.png" alt="Paths Viewer - Post Events Mode with selected files" width="40%" />
-2. real time: directly communicates with the object to record its geolocation data.
-<img src="https://user-images.githubusercontent.com/20072456/175796516-6a30624a-77b6-495a-9646-4ebddd3107a8.png" alt="Paths Viewer - Real Time Mode" width="40%" />
+## Demonstração de Uso
+Para uma breve demonstração, acesse o **PathsViewer** no endereço [paths-viewer.vercel.app](https://paths-viewer.vercel.app/).
 
-Both operation modes share objects visualization over a 2D map. It can be used by any researcher that needs tracemaps visualization.
-<img src="https://user-images.githubusercontent.com/20072456/175796520-0dbb2ee5-cba2-4d60-b41a-fa3059da2736.png" alt="Paths Viewer - Rome" width="40%" />
+- A tela inicial apresenta a seleção dos modos de operação
 
-It is being developed as a Course Final Work for the Undergraduation of William Quintas, oriented by [Prof. Dr. Christian Rothenberg](https://www.dca.fee.unicamp.br/~chesteve/).
+<p align="center">
+  <img src="./assets/paths-viewer-main.png" width="90%" />
+</p>
 
-# Dependencies
+- Modo de operação **pós-eventos**
 
-- [Typescript 4.6.4](https://www.npmjs.com/package/typescript/v/4.6.4)
-- [React 18.1.0](https://www.npmjs.com/package/react/v/18.1.0)
-- [Next 12.1.6](https://nextjs.org/)
-- [ReduxJS Toolkit 1.8.2](https://www.npmjs.com/package/@reduxjs/toolkit/v/1.8.2)
-- [Google Maps React Wrapper 1.1.33](https://developers.google.com/maps/documentation/javascript/react-map)
-- [Firebase SDK 9.8.2](https://firebase.google.com/docs/reference/js)
-- [Firebase Admin 10.2.0](https://firebase.google.com/docs/reference/admin)
+  Veja na imagem abaixo a interface para carregar os dados a serem utilizados no modo pós-eventos. É possível selecionar a visualização de mapa 2D ou satélite. Usando o ícone de edição ao lado de cada _dataset_, o usuário pode editar o nome e cor do traço. Também são listadas as coordenadas de cada coleta
 
-# Setup
+  > 💡 Teste com os _datasets_ de exemplo na pasta [simulations](simulations)
 
-- Download and install **Node**. Recommended to use **nvm** from [here](https://github.com/nvm-sh/nvm#installing-and-updating).
-  - You can follow [this tutorial](https://heynode.com/tutorial/install-nodejs-locally-nvm/) to install nvm.
-  - You might make sure you have nvm and that it’s available from your command line. You can check this by simply running:
-    `$ command -v nvm`
-  - After that, you’ll need to make sure you install Node. You can make this by running:
-    `$ nvm install --lts`
-- Clone this repository.
-  `$ git clone https://github.com/williamquintas/DRL-UAVs-Placer.git /path/to/repo`
-- Install the dependencies.
+<p align="center">
+  <img src="./assets/paths-viewer-post-events-2.png" width="45%" />
+  <img src="./assets/paths-viewer-post-events-7.png" width="45%" />
+</p>
 
-```
-cd /path/to/repo
-npm install
-```
+- Modo de operação **em tempo real**
 
-# Files
+  Também podemos realizar o envio de dados em tempo real através de dispositivos distribuídos. Na imagem abaixo, são exibidos os parâmetros de conexão para enviar dados para a API do **PathsViewer**, para que a interface no navegador exiba em tempo real as coletas realizadas 
 
-This repository files are structured as follows:
+  > 💡 Utilize o _script_ [realtime-sim](simulations/realtime-sim.py) para simular o envio dos dados em tempo real
 
-```
-|── components
-|   |── ...
-|── config
-|   |── firebase.ts
-|   |── firebaseClient.ts
-|   |── hooks.ts
-|   |── store.ts
-|   |── theme.ts
-|── css
-|   |── index.css
-|── features
-|   |── sessions
-|   |   |── slice.ts
-|── models
-|   |── ...
-|── pages
-|   |── api
-|   |── post-events
-|   |── real-time
-|   |── index.tsx
-|── public
-|── services
-|   |── SessionService.ts
-|── simulations
-|   |── ...
-|── utils
-|   |── ...
+<p align="center">
+  <img src="./assets/paths-viewer-realtime-1.png" width="45%" />
+  <img src="./assets/paths-viewer-realtime-2.png" width="45%" />
+</p>
+
+## 🚀 Configuração inicial
+Essas instruções vão permitir que você tenha uma cópia funcional do projeto na sua máquina local para desenvolvimento e testes.
+
+### 📋 Requisitos
+- [NodeJS v18.3.0 LTS / NPM v8.11](https://nodejs.org/pt-br/download/) (recomenda-se fortemente a utilização do [NVM](https://github.com/nvm-sh/nvm) para gerenciar facilmente as versões do NodeJS)
+- [Yarn](https://yarnpkg.com/getting-started/install)
+- [Configurar as credenciais do Firebase](#database)
+
+### 🔧 Instalação
+- Clone o repositório
+```sh
+git clone https://github.com/intrig-unicamp/paths-viewer.git
+cd paths-viewer # entre na pasta onde foi feito o clone
 ```
 
-_TODO: describe directories purposes_
+- (se utilizar _NVM_): Configure a versão NodeJS correspondente
+```sh
+nvm install
+nvm use # necessário executar sempre que for iniciar o projeto
+```
 
-# Scripts
+- Instale as dependências do projeto
+```sh
+yarn install
+```
 
-In the project directory, you can run:
+- Inicie o projeto no modo desenvolvedor
+```sh
+yarn dev
+```
+  Por padrão, a interface deverá iniciar no endereço [http://localhost:3000](http://localhost:3000).
 
-### `npm run dev`
+> 💡 Consulte o [guia de instalação](./wiki/) na Wiki para mais exemplos e casos de uso.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📊 Banco de Dados<a id="database"></a>
+Utilizamos o Firebase como solução de banco de dados, tanto em produção quanto desenvolvimento. É necessário gerar as credenciais necessárias para executar o projeto sem problemas.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 👏 Contribuições
+Todos são bem-vindos a realizar contribuições e sugestões no código! Recomenda-se enviar *pull requests* ou então criar *issues*. A nossa equipe analisará em breve.
 
-### `npm run build`
+## Licença
+Esse projeto adere à licença **MIT**. Consulte o [arquivo LICENSE](LICENSE) para mais informações.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-### `npm run start`
-
-Serves the built folder.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page won't reload when you make changes.\
-Requires to run `npm run build` before.
-
-# Simulations
-
-_TODO: describe simulations and how to run it_
+Copyright © [INTRIG Research Group](//github.com/intrig-unicamp/).
