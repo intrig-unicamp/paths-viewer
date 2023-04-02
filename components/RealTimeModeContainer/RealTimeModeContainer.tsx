@@ -109,8 +109,8 @@ const HelpCard: FunctionComponent<{ sessionId: string }> = ({ sessionId }) => {
     },
     {
       title: "Example Request",
-      content: `curl -X POST ${appUrl}/api/session/${sessionId} \\
-    -H "Content-Type: application/json" \\
+      content: `curl ${appUrl}/api/session/${sessionId} \\
+    -X POST -H "Content-Type: application/json" \\
     -d '{
       "id": "SOME_ID",
       "date": "2022-01-02",
