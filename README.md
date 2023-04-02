@@ -43,7 +43,7 @@ Essas instruções vão permitir que você tenha uma cópia funcional do projeto
 ### 📋 Requisitos
 - [NodeJS v18.3.0 LTS / NPM v8.11](https://nodejs.org/pt-br/download/) (recomenda-se fortemente a utilização do [NVM](https://github.com/nvm-sh/nvm) para gerenciar facilmente as versões do NodeJS)
 - [Yarn](https://yarnpkg.com/getting-started/install)
-- [Configurar as credenciais do Firebase](#database)
+- [Gerar as credenciais do Firebase](//github.com/intrig-unicamp/paths-viewer/wiki/Gerar%20as%20Credenciais%20do%20Firebase)
 
 ### 🔧 Instalação
 - Clone o repositório
@@ -71,8 +71,8 @@ yarn dev
 
 > 💡 Consulte o [guia de instalação](//github.com/intrig-unicamp/paths-viewer/wiki/Instala%C3%A7%C3%A3o) na Wiki para mais exemplos e casos de uso.
 
-## 📊 Banco de Dados<a id="database"></a>
-Utilizamos o Firebase como solução de banco de dados, tanto em produção quanto desenvolvimento. É necessário gerar as credenciais necessárias para executar o projeto sem problemas.
+## 📊 Banco de Dados
+Utilizamos o Firebase como solução de banco de dados, tanto em produção quanto desenvolvimento. É necessário gerar as credenciais necessárias para executar o projeto sem problemas. Siga o [guia respectivo na Wiki](//github.com/intrig-unicamp/paths-viewer/wiki/Gerar%20as%20Credenciais%20do%20Firebase) para mais informações.
 
 ## 👏 Contribuições
 Todos são bem-vindos a realizar contribuições e sugestões no código! Recomenda-se enviar *pull requests* ou então criar *issues*. A nossa equipe analisará em breve.
