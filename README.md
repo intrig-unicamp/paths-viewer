@@ -4,7 +4,7 @@
 
 É possível utilizar conjuntos de dados variados, com estruturas diversas, tais como _traces_ de 5G georeferenciados e trajetórias de veículos.
 
-Esse repositório contém todo o código da ferramenta, como também instruções para execução, _deploy_, contribuição e demais informações.
+Esse repositório (e sua [Wiki](//github.com/intrig-unicamp/paths-viewer/wiki/)) contém todo o código da ferramenta, como também instruções para execução, _deploy_, contribuição e demais informações.
 
 ## Demonstração de Uso
 Para uma breve demonstração, acesse o **PathsViewer** no endereço [paths-viewer.vercel.app](https://paths-viewer.vercel.app/).
