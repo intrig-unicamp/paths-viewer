@@ -69,7 +69,7 @@ yarn dev
 ```
   Por padrão, a interface deverá iniciar no endereço [http://localhost:3000](http://localhost:3000).
 
-> 💡 Consulte o [guia de instalação](./wiki/) na Wiki para mais exemplos e casos de uso.
+> 💡 Consulte o [guia de instalação](//github.com/intrig-unicamp/paths-viewer/wiki/Instala%C3%A7%C3%A3o) na Wiki para mais exemplos e casos de uso.
 
 ## 📊 Banco de Dados<a id="database"></a>
 Utilizamos o Firebase como solução de banco de dados, tanto em produção quanto desenvolvimento. É necessário gerar as credenciais necessárias para executar o projeto sem problemas.
