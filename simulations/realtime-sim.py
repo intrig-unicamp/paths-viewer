@@ -35,10 +35,9 @@ def get_payload_from_rowSP(row: list) -> dict:
     return payload
 
 
-def send_request(session_id, payload: dict):
-    URL = 'https://paths-viewer.vercel.app/api/session'
+def send_request(endpoint, payload: dict):
     print(payload)
-    response = requests.post(f'{URL}/{session_id}', json=payload)
+    response = requests.post(endpoint, json=payload)
     return response.json()
 
 
@@ -54,7 +53,7 @@ def get_milliseconds_from_datetimeSP(timestamp: str) -> int:
     current = datetime.strptime(timestamp, format_data)
     return current
 
-def mainSP(city, objects_quantity, simulation_velocity, session_id):
+def mainSP(city, objects_quantity, simulation_velocity, endpoint):
     coordinates_list = []
 
     for object_index in range(1, objects_quantity+1):
@@ -81,13 +80,13 @@ def mainSP(city, objects_quantity, simulation_velocity, session_id):
         time = next_ms.strftime("%H:%M:%S")
 
         del payload['timestamp']
-        response = send_request(session_id, { **payload, 'date': date, 'time': time })
+        response = send_request(endpoint, { **payload, 'date': date, 'time': time })
         print(response)
         
         sleep((1.0/simulation_velocity) * (delta.total_seconds()))
         current_ms = next_ms
 
-def main(city, objects_quantity, simulation_velocity, session_id):
+def main(city, objects_quantity, simulation_velocity, endpoint):
     coordinates_list = []
 
     for object_index in range(1, objects_quantity+1):
@@ -110,7 +109,7 @@ def main(city, objects_quantity, simulation_velocity, session_id):
         next_ms = get_milliseconds_from_datetime(payload['date'], payload['time'])
         delta = next_ms - current_ms
 
-        response = send_request(session_id, payload)
+        response = send_request(endpoint, payload)
         print(response)
         
         sleep((1.0/simulation_velocity) * (delta.total_seconds()))
@@ -124,7 +123,7 @@ if __name__ == '__main__':
     parser.add_argument("--city", "-c", help="Select which city dataset to use. \
         Current options are BELO_HORIZONTE, RIO_DE_JANEIRO, ROME, SAN_FRANCISCO and SAO_PAULO.")
     parser.add_argument("--objects-quantity", "-o", help="Select how many objects to use, up to 3.")
-    parser.add_argument("--session-id", "-s", help="Specifies session id.")
+    parser.add_argument("--endpoint", "-s", help="Specifies endpoint to send the requests.")
     parser.add_argument("--simulation-velocity", "-v", help="Specifies simulation velocity.")
     args = parser.parse_args()
     print(args)
@@ -141,12 +140,12 @@ if __name__ == '__main__':
         if args.simulation_velocity is not None \
             and args.simulation_velocity.isnumeric() \
         else 120
-    session_id = args.session_id
+    endpoint = args.endpoint
 
-    if session_id is None:
-        raise Exception('Session id not specified.')
+    if endpoint is None:
+        raise Exception('Endpoint not specified.')
 
     if city == 'SAO_PAULO':
-        mainSP(city, objects_quantity, simulation_velocity, session_id)
+        mainSP(city, objects_quantity, simulation_velocity, endpoint)
     else:
-        main(city, objects_quantity, simulation_velocity, session_id)
+        main(city, objects_quantity, simulation_velocity, endpoint)
