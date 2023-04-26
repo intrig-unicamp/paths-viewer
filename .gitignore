@@ -34,5 +34,5 @@ node_modules
 .env.test.local
 .env.production.local
 
-simulations/**/process_*.py
-simulations/**/raw_data.csv
+examples/**/process_*.py
+examples/**/raw_data.csv

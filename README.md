@@ -19,7 +19,7 @@ Para uma breve demonstração, acesse o **PathsViewer** no endereço [paths-view
 
   Veja na imagem abaixo a interface para carregar os dados a serem utilizados no modo pós-eventos. É possível selecionar a visualização de mapa 2D ou satélite. Usando o ícone de edição ao lado de cada _dataset_, o usuário pode editar o nome e cor do traço. Também são listadas as coordenadas de cada coleta
 
-  > 💡 Teste com os _datasets_ de exemplo na pasta [simulations](simulations)
+  > 💡 Teste com os _datasets_ de exemplo na pasta [examples](examples)
 
 <p align="center">
   <img src="./assets/paths-viewer-post-events-2.png" width="45%" />
@@ -30,7 +30,7 @@ Para uma breve demonstração, acesse o **PathsViewer** no endereço [paths-view
 
   Também podemos realizar o envio de dados em tempo real através de dispositivos distribuídos. Na imagem abaixo, são exibidos os parâmetros de conexão para enviar dados para a API do **PathsViewer**, para que a interface no navegador exiba em tempo real as coletas realizadas 
 
-  > 💡 Utilize o _script_ [realtime-sim](simulations/realtime-sim.py) para simular o envio dos dados em tempo real
+  > 💡 Utilize o _script_ [realtime-sim](examples/realtime-sim.py) para simular o envio dos dados em tempo real
 
 <p align="center">
   <img src="./assets/paths-viewer-realtime-1.png" width="45%" />
