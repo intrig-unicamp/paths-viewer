@@ -42,18 +42,18 @@ def send_request(endpoint, payload: dict):
 
 
 def get_milliseconds_from_datetime(date: str , time: str) -> int:
-    data = f"{date}T{time}"
-    format_data = "%d-%m-%YT%H:%M:%S"
+    data = f'{date}T{time}'
+    format_data = '%d-%m-%YT%H:%M:%S'
     current = datetime.strptime(data, format_data)
     return current
 
 def get_milliseconds_from_datetimeSP(timestamp: str) -> int:
     print(timestamp)
-    format_data = "%Y.%m.%d_%H.%M.%S"
+    format_data = '%Y.%m.%d_%H.%M.%S'
     current = datetime.strptime(timestamp, format_data)
     return current
 
-def mainSP(city, objects_quantity, simulation_velocity, endpoint):
+def mainSP(city, objects_quantity, simulation_speed, endpoint):
     coordinates_list = []
 
     for object_index in range(1, objects_quantity+1):
@@ -76,17 +76,17 @@ def mainSP(city, objects_quantity, simulation_velocity, endpoint):
     for payload in coordinates_list:
         next_ms = get_milliseconds_from_datetimeSP(payload['timestamp'])
         delta = next_ms - current_ms
-        date = next_ms.strftime("%Y-%m-%d")
-        time = next_ms.strftime("%H:%M:%S")
+        date = next_ms.strftime('%Y-%m-%d')
+        time = next_ms.strftime('%H:%M:%S')
 
         del payload['timestamp']
         response = send_request(endpoint, { **payload, 'date': date, 'time': time })
         print(response)
-        
-        sleep((1.0/simulation_velocity) * (delta.total_seconds()))
+
+        sleep((1.0/simulation_speed) * (delta.total_seconds()))
         current_ms = next_ms
 
-def main(city, objects_quantity, simulation_velocity, endpoint):
+def main(city, objects_quantity, simulation_speed, endpoint):
     coordinates_list = []
 
     for object_index in range(1, objects_quantity+1):
@@ -111,41 +111,22 @@ def main(city, objects_quantity, simulation_velocity, endpoint):
 
         response = send_request(endpoint, payload)
         print(response)
-        
-        sleep((1.0/simulation_velocity) * (delta.total_seconds()))
+
+        sleep((1.0/simulation_speed) * (delta.total_seconds()))
         current_ms = next_ms
 
 if __name__ == '__main__':
     MAX_OBJECTS = 3
+    city_choices = ['BELO_HORIZONTE', 'RIO_DE_JANEIRO', 'ROME', 'SAN_FRANCISCO', 'SAO_PAULO']
 
-    #sys.path.append('.')
     parser = argparse.ArgumentParser()
-    parser.add_argument("--city", "-c", help="Select which city dataset to use. \
-        Current options are BELO_HORIZONTE, RIO_DE_JANEIRO, ROME, SAN_FRANCISCO and SAO_PAULO.")
-    parser.add_argument("--objects-quantity", "-o", help="Select how many objects to use, up to 3.")
-    parser.add_argument("--endpoint", "-s", help="Specifies endpoint to send the requests.")
-    parser.add_argument("--simulation-velocity", "-v", help="Specifies simulation velocity.")
+    parser.add_argument('--city', '-c', choices=city_choices, default='RIO_DE_JANEIRO', help='Which city dataset to use')
+    parser.add_argument('--objects-quantity', '-q', type=int, choices=range(1, MAX_OBJECTS + 1), default=1, help='Amount of objects to use')
+    parser.add_argument('--endpoint', '-e', required=True, help='Endpoint to send the requests')
+    parser.add_argument('--simulation-speed', '-s', type=int, default=120, help='Simulation speed')
     args = parser.parse_args()
-    print(args)
 
-    city = args.city \
-        if args.city is not None and args.city in ['BELO_HORIZONTE', 'RIO_DE_JANEIRO', 'ROME','SAN_FRANCISCO', 'SAO_PAULO'] \
-        else 'RIO_DE_JANEIRO'
-    objects_quantity = int(args.objects_quantity) \
-        if args.objects_quantity is not None \
-            and args.objects_quantity.isnumeric() \
-            and int(args.objects_quantity) <= MAX_OBJECTS \
-        else 1
-    simulation_velocity = int(args.simulation_velocity) \
-        if args.simulation_velocity is not None \
-            and args.simulation_velocity.isnumeric() \
-        else 120
-    endpoint = args.endpoint
-
-    if endpoint is None:
-        raise Exception('Endpoint not specified.')
-
-    if city == 'SAO_PAULO':
-        mainSP(city, objects_quantity, simulation_velocity, endpoint)
+    if args.city == 'SAO_PAULO':
+        mainSP(args.city, args.objects_quantity, args.simulation_speed, args.endpoint)
     else:
-        main(city, objects_quantity, simulation_velocity, endpoint)
+        main(args.city, args.objects_quantity, args.simulation_speed, args.endpoint)

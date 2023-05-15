@@ -2,7 +2,7 @@
 
 **PathsViewer** é uma ferramenta para visualização de dados espaço-temporais **em tempo real** ou **pós-eventos**. Essa ferramenta busca suprir a demanda por ferramentas de visualização de trajetórias de objetos, em vista do grande interesse em pesquisas nesse tipo de dado.
 
-É possível utilizar conjuntos de dados variados, com estruturas diversas, tais como _traces_ de 5G georeferenciados e trajetórias de veículos.
+É possível utilizar conjuntos de dados variados, com estruturas diversas, tais como _traces_ de 5G georreferenciados e trajetórias de veículos.
 
 Esse repositório (e sua [Wiki](//github.com/intrig-unicamp/paths-viewer/wiki/)) contém todo o código da ferramenta, como também instruções para execução, _deploy_, contribuição e demais informações.
 
@@ -28,7 +28,7 @@ Para uma breve demonstração, acesse o **PathsViewer** no endereço [paths-view
 
 - Modo de operação **em tempo real**
 
-  Também podemos realizar o envio de dados em tempo real através de dispositivos distribuídos. Na imagem abaixo, são exibidos os parâmetros de conexão para enviar dados para a API do **PathsViewer**, para que a interface no navegador exiba em tempo real as coletas realizadas 
+  Também podemos realizar o envio de dados em tempo real através de dispositivos distribuídos. Na imagem abaixo, são exibidos os parâmetros de conexão para enviar dados para a API do **PathsViewer**, para que a interface no navegador exiba em tempo real as coletas realizadas
 
   > 💡 Utilize o _script_ [realtime-sim](examples/realtime-sim.py) para simular o envio dos dados em tempo real
 
@@ -36,6 +36,24 @@ Para uma breve demonstração, acesse o **PathsViewer** no endereço [paths-view
   <img src="./assets/paths-viewer-realtime-1.png" width="45%" />
   <img src="./assets/paths-viewer-realtime-2.png" width="45%" />
 </p>
+
+## Formato de arquivo
+A ferramenta aceita o envio de arquivos no formato `.csv` sem cabeçalho. Exemplo:
+
+```txt
+C13062,10-03-2014,07:00:54,-23.007013,-43.311646
+C13062,10-03-2014,07:01:54,-23.007328,-43.306889
+C13062,10-03-2014,07:02:54,-23.009064,-43.305984
+C13062,10-03-2014,07:03:54,-23.010941,-43.309719
+C13062,10-03-2014,07:04:53,-23.013695,-43.313404
+```
+
+As colunas devem ser na ordem:
+- Identificador
+- Data, no formato `<dia>-<mês>-<ano>`
+- Hora, no formato `<horas>-<minutos>-<segundos>`
+- Latitude em graus decimais
+- Longitude em graus decimais
 
 ## 🚀 Configuração inicial
 Essas instruções vão permitir que você tenha uma cópia funcional do projeto na sua máquina local para desenvolvimento e testes.
