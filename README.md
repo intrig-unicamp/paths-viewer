@@ -7,7 +7,7 @@
 Esse repositório (e sua [Wiki](//github.com/intrig-unicamp/paths-viewer/wiki/)) contém todo o código da ferramenta, como também instruções para execução, _deploy_, contribuição e demais informações.
 
 ## Demonstração de Uso
-Para uma breve demonstração, acesse o **PathsViewer** no endereço [paths-viewer.vercel.app](https://paths-viewer.vercel.app/).
+Para uma breve demonstração, acesse o **PathsViewer** no endereço [intrig-unicamp.github.io/paths-viewer](https://intrig-unicamp.github.io/paths-viewer/).
 
 - A tela inicial apresenta a seleção dos modos de operação
 

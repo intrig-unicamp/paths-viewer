@@ -27,7 +27,7 @@ O _script_ [`realtime-sim.py`](./realtime-sim.py) faz o envio de dados históric
 
 Esse _script_ pode ser executado pelo terminal da seguinte forma:
 ```bash
-python3 realtime-sim.py --endpoint https://paths-viewer.vercel.app/api/session/1773295143798 --city RIO_DE_JANEIRO
+python3 realtime-sim.py --endpoint https://example.com/paths-viewer/api/session/1773295143798 --city RIO_DE_JANEIRO
 ```
 
 Para mais opções de utilização, consulte o comando de ajuda:
